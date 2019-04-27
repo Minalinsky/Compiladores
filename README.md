@@ -3,11 +3,9 @@
 
 ### Compilando:
 
-flex regex.l
+make
 
-gcc -g main.c lex.yy.c -lfl -o nome_arquivo_saida
-
-./nome_arquivo_saida < input.txt
+./nome_arquivo_saida < input.txt ou make run
 
 
 ### TODO:
