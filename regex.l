@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-int nlines=0, ntoken;
+int nlines=1, ntoken;
 %}
 
 NUMERO_INT [0-9]

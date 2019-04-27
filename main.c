@@ -13,8 +13,8 @@ int main(int argc, char const *argv[]) {
   // Função principal, futuramente substituida pelo analisador sintático
   while(ntoken){
     printf("Linha %d: ", nlines);
-    printf("%d ", ntoken);
-    printf("%s\n", yytext);
+    printf("tipo do token: %d ", ntoken);
+    printf("token: %s\n\n", yytext);
 
     // Tratar os erros aqui!
 
