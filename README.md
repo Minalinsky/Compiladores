@@ -18,7 +18,7 @@ Implementação da tabela de palavras reservadas;
 
 Relatório.
 
-Tratar erros:
+**Tratar erros:**
 - [ ] Símbolo não pertencente ao conjunto de símbolos
 - [ ] terminais da linguagem: @";
 - [ ] "Identificador mal formado: j@, 1a";
