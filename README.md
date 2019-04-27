@@ -5,7 +5,7 @@
 
 make
 
-./nome_arquivo_saida < input.txt ou make run
+./lexical < input.txt ou make run
 
 
 ### TODO:
