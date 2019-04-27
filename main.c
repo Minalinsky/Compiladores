@@ -16,6 +16,8 @@ int main(int argc, char const *argv[]) {
     printf("%d ", ntoken);
     printf("%s\n", yytext);
 
+    // Tratar os erros aqui!
+
 
     ntoken = yylex();
   }
