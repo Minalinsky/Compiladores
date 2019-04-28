@@ -2,7 +2,8 @@ program p;
 {comentario de}
 var x: integer;
 begin
-	x:=1a2;
+	x:=1a32.111a34;
+	x:=12a;
 	while (x<3) do
 	x:=x+1;
 end.

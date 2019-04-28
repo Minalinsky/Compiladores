@@ -23,3 +23,11 @@ Relatório.
 - [ ] "Tamanho do identificador: minha_variável_para_..."
 - [ ] "Número mal formado: 2.a3"
 - [ ] "Fim de arquivo inesperado (comentário não fechado): {..
+
+
+### Relatório Justificativas:
+
+* Deixar o regex simples e tratar erros na análise sintática;
+* Arquivo separado (main.c) para modularizar o código nas próximas etapas;
+* Não retornar tokens do tipo <+, +>, retornando no formato <+, SOMA> para facilitar o entendimento;
+* Erros mais específicos?
