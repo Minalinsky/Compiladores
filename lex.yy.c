@@ -608,7 +608,7 @@ void insert_word(int i){
 }
 
 void create_hash(){
-	for(int i = 0; i < 7; i++)
+	for(int i = 0; i < SIZE; i++)
 		insert_word(i);
 }
 

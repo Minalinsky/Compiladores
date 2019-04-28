@@ -50,6 +50,35 @@ struct reserved_word find_reserved_words(char *word){
 void insert_word(int i){
 	char * word;
 	char * return_message;
+	/*
+	program
+	b
+	e
+	c
+	v
+	r
+	i
+	p
+	e
+	r
+	w
+	w
+	i
+	t
+	d
+
+	program procedure
+	begin
+	end else
+	const
+	var
+	real read
+	integer
+	write while
+	if
+	then
+	do
+	*/
 
 	if(i == 0){
 		word = (char*)malloc(sizeof(char) * 7);
@@ -141,12 +170,18 @@ void insert_word(int i){
 		return_message = (char*)malloc(sizeof(char) * 10);
 		return_message = "SIMBOLO_DO";
 	}
+	else if(i == 15){
+		word = (char*)malloc(sizeof(char) * 3);
+		word = "for";
+		return_message = (char*)malloc(sizeof(char) * 11);
+		return_message = "SIMBOLO_FOR";
+	}
 
 	insert_word_aux(word, return_message, (i + 3));
 }
 
 void create_hash(){
-	for(int i = 0; i < 7; i++)
+	for(int i = 0; i < SIZE; i++)
 		insert_word(i);
 }
 
