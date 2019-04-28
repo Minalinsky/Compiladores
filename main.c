@@ -58,13 +58,17 @@ int main(int argc, char const *argv[]) {
     // Tratar os erros aqui!
     //tratando tamanho dos identificadores
     if((ntoken == 35) && (strlen(yytext) > 32)){
-        printf("%s - ERRO_TAMANHO_ID", yytext);
+        printf("Tamanho do identificador incompativel: %s\n", yytext);
         fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
+    }
+    else if(ntoken == -1){
+        printf("%s - ERRO\n", yytext);
+        fprintf(fp, "%s - ERRO\n", yytext);
     }
     else{
         printf("Linha %d: ", nlines);
         printf("\ntipo do token: %d ", ntoken);
-        printf("\ntoken: %s\n\n", yytext);
+        printf("\ntoken: %s\n", yytext);
         fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
     }
 
