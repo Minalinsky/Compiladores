@@ -190,8 +190,9 @@ void create_hash(){
 
 %}
 
-NUMERO_INT [0-9]
-NUMERO_REAL {NUMERO_INT}+"."{NUMERO_INT}+
+DIGITO [0-9]
+NUMERO_INT -?{DIGITO}({DIGITO})*
+NUMERO_REAL -?{DIGITO}+"."{DIGITO}+
 IDENT [a-zA-Z][a-zA-Z0-9_]*
 COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 %%
@@ -199,8 +200,15 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 [ \t]     ;
 {COMENTARIO}  ;
 
+
 {NUMERO_INT}+ {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
 {NUMERO_REAL} {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
+
+{NUMERO_INT}[_@#$%&a-zA-Z]+{DIGITO}*  {printf("Numero mal formatado: %s\n", yytext); return -1;}
+{NUMERO_INT}"."{DIGITO}*[_@#$%&a-zA-Z]+{DIGITO}* {printf("Numero mal formatado: %s\n", yytext); return -1;}
+
+[_@#$%&]+[a-zA-Z0-9]* {printf("Identificador mal formatado: %s\n", yytext); return -1;}
+["{"][ \ta-zA-Z_]* {printf("Comentário não fechado: %s\n", yytext); return -1;}
 
 ":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 19;}
 "=" {printf("<%s, IGUAL>\n", yytext); return 20;}
@@ -230,7 +238,9 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 
 "\n" {nlines++;}
 
+. {printf("entrada invalida: %s\n", yytext); return -1;}
 %%
+
 int yywrap(void)
 {
   	return 1;
