@@ -75,6 +75,6 @@ int main(int argc, char const *argv[]) {
     ntoken = yylex();
   }
 
- fclose(fp);
+  fclose(fp);
   return 0;
 }
