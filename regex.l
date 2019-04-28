@@ -223,7 +223,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 				printf("<%s, %s>\n", yytext, reserved.return_message); 
 				return reserved.return_value;
 			}
-			printf("<%s, IDENT>\n", yytext); return 35;
+			printf("<%s, IDENT>\n", yytext); return 36;
 		}
 
 "\n" {nlines++;}
