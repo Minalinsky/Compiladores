@@ -31,15 +31,17 @@ void insert_word_aux(char * word, char * return_message, int return_value){
 
 struct reserved_word find_reserved_words(char *word){
 	int length = strlen(word);
-	int asc_value = 0;
+	if(length <= 9){
+		int asc_value = 0;
 
-	for(int i = 0; i < length; i++)
-		asc_value += (int)word[i];
+		for(int i = 0; i < length; i++)
+			asc_value += (int)word[i];
 
-	int position = asc_value % SIZE;
+		int position = asc_value % SIZE;
 
-	if(strcmp(reserveds_words[position].word, word) == 0)
-		return reserveds_words[position];
+		if(strcmp(reserveds_words[position].word, word) == 0)
+			return reserveds_words[position];
+	}
 	
 	struct reserved_word nulo;
 	nulo.word = "nulo";

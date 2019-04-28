@@ -465,7 +465,7 @@ char *yytext;
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 15
+#define SIZE 16
 
 int nlines=1, ntoken;
 
@@ -493,15 +493,17 @@ void insert_word_aux(char * word, char * return_message, int return_value){
 
 struct reserved_word find_reserved_words(char *word){
 	int length = strlen(word);
-	int asc_value = 0;
+	if(length <= 9){
+		int asc_value = 0;
 
-	for(int i = 0; i < length; i++)
-		asc_value += (int)word[i];
+		for(int i = 0; i < length; i++)
+			asc_value += (int)word[i];
 
-	int position = asc_value % SIZE;
+		int position = asc_value % SIZE;
 
-	if(strcmp(reserveds_words[position].word, word) == 0)
-		return reserveds_words[position];
+		if(strcmp(reserveds_words[position].word, word) == 0)
+			return reserveds_words[position];
+	}
 	
 	struct reserved_word nulo;
 	nulo.word = "nulo";
@@ -512,6 +514,36 @@ struct reserved_word find_reserved_words(char *word){
 void insert_word(int i){
 	char * word;
 	char * return_message;
+	/*
+	program
+	b
+	e
+	c
+	v
+	r
+	i
+	p
+	e
+	r
+	w
+	w
+	i
+	t
+	d
+
+	program procedure
+	begin
+	end else
+	const
+	var
+	real read
+	integer
+	write while
+	if
+	then
+	do
+	for
+	*/
 
 	if(i == 0){
 		word = (char*)malloc(sizeof(char) * 7);
@@ -603,6 +635,12 @@ void insert_word(int i){
 		return_message = (char*)malloc(sizeof(char) * 10);
 		return_message = "SIMBOLO_DO";
 	}
+	else if(i == 15){
+		word = (char*)malloc(sizeof(char) * 3);
+		word = "for";
+		return_message = (char*)malloc(sizeof(char) * 11);
+		return_message = "SIMBOLO_FOR";
+	}
 
 	insert_word_aux(word, return_message, (i + 3));
 }
@@ -612,8 +650,8 @@ void create_hash(){
 		insert_word(i);
 }
 
-#line 616 "lex.yy.c"
-#line 617 "lex.yy.c"
+#line 654 "lex.yy.c"
+#line 655 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -830,10 +868,10 @@ YY_DECL
 		}
 
 	{
-#line 159 "regex.l"
+#line 197 "regex.l"
 
 
-#line 837 "lex.yy.c"
+#line 875 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -892,132 +930,132 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 161 "regex.l"
+#line 199 "regex.l"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 162 "regex.l"
+#line 200 "regex.l"
 ;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 164 "regex.l"
+#line 202 "regex.l"
 {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 165 "regex.l"
+#line 203 "regex.l"
 {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 167 "regex.l"
-{printf("<%s, ATRIBUICAO>\n", yytext); return 18;}
+#line 205 "regex.l"
+{printf("<%s, ATRIBUICAO>\n", yytext); return 19;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 168 "regex.l"
-{printf("<%s, IGUAL>\n", yytext); return 19;}
+#line 206 "regex.l"
+{printf("<%s, IGUAL>\n", yytext); return 20;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 169 "regex.l"
-{printf("<%s, PONTO_VIRGULA>\n", yytext); return 20;}
+#line 207 "regex.l"
+{printf("<%s, PONTO_VIRGULA>\n", yytext); return 21;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 170 "regex.l"
-{printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 21;}
+#line 208 "regex.l"
+{printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 22;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 171 "regex.l"
-{printf("<%s, DOIS_PONTOS>\n", yytext); return 22;}
+#line 209 "regex.l"
+{printf("<%s, DOIS_PONTOS>\n", yytext); return 23;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 172 "regex.l"
-{printf("<%s, MULT>\n", yytext); return 23;}
+#line 210 "regex.l"
+{printf("<%s, MULT>\n", yytext); return 24;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 173 "regex.l"
-{printf("<%s, DIV>\n", yytext); return 24;}
+#line 211 "regex.l"
+{printf("<%s, DIV>\n", yytext); return 25;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 174 "regex.l"
-{printf("<%s, SOMA>\n", yytext); return 25;}
+#line 212 "regex.l"
+{printf("<%s, SOMA>\n", yytext); return 26;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 175 "regex.l"
-{printf("<%s, SUB>\n", yytext); return 26;}
+#line 213 "regex.l"
+{printf("<%s, SUB>\n", yytext); return 27;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 176 "regex.l"
-{printf("<%s, SIMBOLO_APAR>\n", yytext); return 27;}
+#line 214 "regex.l"
+{printf("<%s, SIMBOLO_APAR>\n", yytext); return 28;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 177 "regex.l"
-{printf("<%s, SIMBOLO_FPAR>\n", yytext); return 28;}
+#line 215 "regex.l"
+{printf("<%s, SIMBOLO_FPAR>\n", yytext); return 29;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 178 "regex.l"
-{printf("<%s, DIFERENTE>\n", yytext); return 29;}
+#line 216 "regex.l"
+{printf("<%s, DIFERENTE>\n", yytext); return 30;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 179 "regex.l"
-{printf("<%s, MAIOR_IGUAL>\n", yytext); return 30;}
+#line 217 "regex.l"
+{printf("<%s, MAIOR_IGUAL>\n", yytext); return 31;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 180 "regex.l"
-{printf("<%s, MENOR_IGUAL>\n", yytext); return 31;}
+#line 218 "regex.l"
+{printf("<%s, MENOR_IGUAL>\n", yytext); return 32;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 181 "regex.l"
-{printf("<%s, MAIOR>\n", yytext); return 32;}
+#line 219 "regex.l"
+{printf("<%s, MAIOR>\n", yytext); return 33;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 182 "regex.l"
-{printf("<%s, MENOR>\n", yytext); return 33;}
+#line 220 "regex.l"
+{printf("<%s, MENOR>\n", yytext); return 34;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 183 "regex.l"
-{printf("<%s, PONTO>\n", yytext); return 34;}
+#line 221 "regex.l"
+{printf("<%s, PONTO>\n", yytext); return 35;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 185 "regex.l"
+#line 223 "regex.l"
 {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "nulo") != 0){
 				printf("<%s, %s>\n", yytext, reserved.return_message); 
 				return reserved.return_value;
 			}
-			printf("<%s, IDENT>\n", yytext); return 35;
+			printf("<%s, IDENT>\n", yytext); return 36;
 		}
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 193 "regex.l"
+#line 231 "regex.l"
 {nlines++;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 195 "regex.l"
+#line 233 "regex.l"
 ECHO;
 	YY_BREAK
-#line 1021 "lex.yy.c"
+#line 1059 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2022,7 +2060,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 195 "regex.l"
+#line 233 "regex.l"
 
 int yywrap(void)
 {
