@@ -1,7 +1,62 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#define SIZE 15
+
 int nlines=1, ntoken;
+
+struct reserved_word{
+	char * word;
+	char * return_message;
+	int return_value;
+};
+
+struct reserved_word reserveds_words[SIZE];
+
+void insert_word(char * word, char * return_message, int return_value){
+	int length = strlen(word);
+	int asc_value = 0;
+
+	for(int i = 0; i < length; i++)
+		asc_value += (int)word[i];
+
+	int position = asc_value % SIZE;
+
+	reserveds_words[position].word = word;
+	reserveds_words[position].return_message = return_message;
+	reserveds_words[position].return_value = return_value;
+}
+
+struct reserved_word find_reserved_words(char *word){
+	int length = strlen(word);
+	int asc_value = 0;
+
+	for(int i = 0; i < length; i++)
+		asc_value += (int)word[i];
+
+	int position = asc_value % SIZE;
+
+	if(strcmp(reserveds_words[position].word, word) == 0)
+		return reserveds_words[position];
+	
+	struct reserved_word nulo;
+	nulo.word = "nulo";
+
+	return nulo;
+}
+
+void create_hash(){
+	insert_word("program", "SIMBOLO_PROGRAM", 3);
+	insert_word("begin", "SIMBOLO_BEGIN", 4);
+	insert_word("end", "SIMBOLO_END", 5);
+	insert_word("const", "SIMBOLO_CONST", 6);
+	insert_word("var", "SIMBOLO_VAR", 7);
+	insert_word("real", "SIMBOLO_REAL", 8);
+	insert_word("integer", "SIMBOLO_INTEGER", 9);
+	insert_word("procedure", "SIMBOLO_PROCEDURE", 10);
+}
 %}
 
 NUMERO_INT [0-9]
@@ -16,14 +71,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 {NUMERO_INT}+ {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
 {NUMERO_REAL} {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
 
-"program" {printf("<%s, SIMBOLO_PROGRAM>\n", yytext); return 3;}
-"begin" {printf("<%s, SIMBOLO_BEGIN>\n", yytext); return 4;}
-"end" {printf("<%s, SIMBOLO_END>\n", yytext); return 5;}
-"const" {printf("<%s, SIMBOLO_CONST>\n", yytext); return 6;}
-"var" {printf("<%s, SIMBOLO_VAR>\n", yytext); return 7;}
-"real" {printf("<%s, SIMBOLO_REAL>\n", yytext); return 8;}
-"integer" {printf("<%s, SIMBOLO_INTEGER>\n", yytext); return 9;}
-"procedure" {printf("<%s, SIMBOLO_PROCEDURE>\n", yytext); return 10;}
+
 "else" {printf("<%s, SIMBOLO_ELSE>\n", yytext); return 11;}
 "read" {printf("<%s, SIMBOLO_READ>\n", yytext); return 12;}
 "write" {printf("<%s, SIMBOLO_WRITE>\n", yytext); return 13;}
@@ -49,12 +97,19 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 "<" {printf("<%s, MENOR>\n", yytext); return 33;}
 "." {printf("<%s, PONTO>\n", yytext); return 34;}
 
-{IDENT} {printf("<%s, IDENT>\n", yytext); return 35;}
+{IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
+			if(strcmp(reserved.word, "nulo") != 0){
+				printf("<%s, %s>\n", yytext, reserved.return_message); 
+				return reserved.return_value;}
+			printf("<%s, IDENT>\n", yytext); return 35;}
+
 "\n" {nlines++;}
 
 %%
-
 int yywrap(void)
 {
-  return 1;
+	create_hash();
+  	return 1;
 }
+
+
