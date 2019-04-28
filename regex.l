@@ -4,8 +4,9 @@
 int nlines=1, ntoken;
 %}
 
-NUMERO_INT [0-9]
-NUMERO_REAL {NUMERO_INT}+"."{NUMERO_INT}+
+DIGITO [0-9]
+NUMERO_INT -?{DIGITO}({DIGITO})*
+NUMERO_REAL -?{DIGITO}+"."{DIGITO}+
 IDENT [a-zA-Z][a-zA-Z0-9_]*
 COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 %%
@@ -13,8 +14,16 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 [ \t]     ;
 {COMENTARIO}  ;
 
+
 {NUMERO_INT}+ {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
 {NUMERO_REAL} {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
+
+{NUMERO_INT}[_@#$%&a-zA-Z]+{DIGITO}*  {printf("Numero mal formatado: %s\n", yytext); return -1;}
+{NUMERO_INT}"."{DIGITO}*[_@#$%&a-zA-Z]+{DIGITO}* {printf("Numero mal formatado: %s\n", yytext); return -1;}
+
+[_@#$%&]+[a-zA-Z0-9]* {printf("Identificador mal formatado: %s\n", yytext); return -1;}
+["{"][ \ta-zA-Z_]* {printf("Comentário não fechado: %s\n", yytext); return -1;}
+
 
 "program" {printf("<%s, SIMBOLO_PROGRAM>\n", yytext); return 3;}
 "begin" {printf("<%s, SIMBOLO_BEGIN>\n", yytext); return 4;}
@@ -48,6 +57,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 ">" {printf("<%s, MAIOR>\n", yytext); return 32;}
 "<" {printf("<%s, MENOR>\n", yytext); return 33;}
 "." {printf("<%s, PONTO>\n", yytext); return 34;}
+
 
 {IDENT} {printf("<%s, IDENT>\n", yytext); return 35;}
 "\n" {nlines++;}
