@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 15
+#define SIZE 16
 
 int nlines=1, ntoken;
 
@@ -31,15 +31,17 @@ void insert_word_aux(char * word, char * return_message, int return_value){
 
 struct reserved_word find_reserved_words(char *word){
 	int length = strlen(word);
-	int asc_value = 0;
+	if(length <= 9){
+		int asc_value = 0;
 
-	for(int i = 0; i < length; i++)
-		asc_value += (int)word[i];
+		for(int i = 0; i < length; i++)
+			asc_value += (int)word[i];
 
-	int position = asc_value % SIZE;
+		int position = asc_value % SIZE;
 
-	if(strcmp(reserveds_words[position].word, word) == 0)
-		return reserveds_words[position];
+		if(strcmp(reserveds_words[position].word, word) == 0)
+			return reserveds_words[position];
+	}
 
 	struct reserved_word nulo;
 	nulo.word = "nulo";
@@ -158,8 +160,9 @@ void create_hash(){
 
 %}
 
-NUMERO_INT [0-9]
-NUMERO_REAL {NUMERO_INT}+"."{NUMERO_INT}+
+DIGITO [0-9]
+NUMERO_INT -?{DIGITO}({DIGITO})*
+NUMERO_REAL -?{DIGITO}+"."{DIGITO}+
 IDENT [a-zA-Z][a-zA-Z0-9_]*
 COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 %%
@@ -167,38 +170,47 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 [ \t]     ;
 {COMENTARIO}  ;
 
+
 {NUMERO_INT}+ {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
 {NUMERO_REAL} {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
 
-":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 18;}
-"=" {printf("<%s, IGUAL>\n", yytext); return 19;}
-";" {printf("<%s, PONTO_VIRGULA>\n", yytext); return 20;}
-"," {printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 21;}
-":" {printf("<%s, DOIS_PONTOS>\n", yytext); return 22;}
-"*" {printf("<%s, MULT>\n", yytext); return 23;}
-"/" {printf("<%s, DIV>\n", yytext); return 24;}
-"+" {printf("<%s, SOMA>\n", yytext); return 25;}
-"-" {printf("<%s, SUB>\n", yytext); return 26;}
-"(" {printf("<%s, SIMBOLO_APAR>\n", yytext); return 27;}
-")" {printf("<%s, SIMBOLO_FPAR>\n", yytext); return 28;}
-"<>" {printf("<%s, DIFERENTE>\n", yytext); return 29;}
-">=" {printf("<%s, MAIOR_IGUAL>\n", yytext); return 30;}
-"<=" {printf("<%s, MENOR_IGUAL>\n", yytext); return 31;}
-">" {printf("<%s, MAIOR>\n", yytext); return 32;}
-"<" {printf("<%s, MENOR>\n", yytext); return 33;}
-"." {printf("<%s, PONTO>\n", yytext); return 34;}
+{NUMERO_INT}[_@#$%&a-zA-Z]+{DIGITO}*  {printf("Numero mal formatado: %s\n", yytext); return -1;}
+{NUMERO_INT}"."{DIGITO}*[_@#$%&a-zA-Z]+{DIGITO}* {printf("Numero mal formatado: %s\n", yytext); return -1;}
+
+[_@#$%&]+[a-zA-Z0-9]* {printf("Identificador mal formatado: %s\n", yytext); return -1;}
+["{"][ \ta-zA-Z_]* {printf("Comentário não fechado: %s\n", yytext); return -1;}
+
+":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 19;}
+"=" {printf("<%s, IGUAL>\n", yytext); return 20;}
+";" {printf("<%s, PONTO_VIRGULA>\n", yytext); return 21;}
+"," {printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 22;}
+":" {printf("<%s, DOIS_PONTOS>\n", yytext); return 23;}
+"*" {printf("<%s, MULT>\n", yytext); return 24;}
+"/" {printf("<%s, DIV>\n", yytext); return 25;}
+"+" {printf("<%s, SOMA>\n", yytext); return 26;}
+"-" {printf("<%s, SUB>\n", yytext); return 27;}
+"(" {printf("<%s, SIMBOLO_APAR>\n", yytext); return 28;}
+")" {printf("<%s, SIMBOLO_FPAR>\n", yytext); return 29;}
+"<>" {printf("<%s, DIFERENTE>\n", yytext); return 30;}
+">=" {printf("<%s, MAIOR_IGUAL>\n", yytext); return 31;}
+"<=" {printf("<%s, MENOR_IGUAL>\n", yytext); return 32;}
+">" {printf("<%s, MAIOR>\n", yytext); return 33;}
+"<" {printf("<%s, MENOR>\n", yytext); return 34;}
+"." {printf("<%s, PONTO>\n", yytext); return 35;}
 
 {IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "nulo") != 0){
 				printf("<%s, %s>\n", yytext, reserved.return_message);
 				return reserved.return_value;
 			}
-			printf("<%s, IDENT>\n", yytext); return 35;
+			printf("<%s, IDENT>\n", yytext); return 36;
 		}
 
 "\n" {nlines++;}
 
+. {printf("entrada invalida: %s\n", yytext); return -1;}
 %%
+
 int yywrap(void)
 {
   	return 1;
