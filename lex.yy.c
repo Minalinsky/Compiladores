@@ -512,6 +512,35 @@ struct reserved_word find_reserved_words(char *word){
 void insert_word(int i){
 	char * word;
 	char * return_message;
+	/*
+	program
+	b
+	e
+	c
+	v
+	r
+	i
+	p
+	e
+	r
+	w
+	w
+	i
+	t
+	d
+
+	program procedure
+	begin
+	end else
+	const
+	var
+	real read
+	integer
+	write while
+	if
+	then
+	do
+	*/
 
 	if(i == 0){
 		word = (char*)malloc(sizeof(char) * 7);
@@ -603,6 +632,12 @@ void insert_word(int i){
 		return_message = (char*)malloc(sizeof(char) * 10);
 		return_message = "SIMBOLO_DO";
 	}
+	else if(i == 15){
+		word = (char*)malloc(sizeof(char) * 3);
+		word = "for";
+		return_message = (char*)malloc(sizeof(char) * 11);
+		return_message = "SIMBOLO_FOR";
+	}
 
 	insert_word_aux(word, return_message, (i + 3));
 }
@@ -612,8 +647,8 @@ void create_hash(){
 		insert_word(i);
 }
 
-#line 616 "lex.yy.c"
-#line 617 "lex.yy.c"
+#line 651 "lex.yy.c"
+#line 652 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -830,10 +865,10 @@ YY_DECL
 		}
 
 	{
-#line 159 "regex.l"
+#line 194 "regex.l"
 
 
-#line 837 "lex.yy.c"
+#line 872 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -892,112 +927,112 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 161 "regex.l"
+#line 196 "regex.l"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 162 "regex.l"
+#line 197 "regex.l"
 ;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 164 "regex.l"
+#line 199 "regex.l"
 {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 165 "regex.l"
+#line 200 "regex.l"
 {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 167 "regex.l"
+#line 202 "regex.l"
 {printf("<%s, ATRIBUICAO>\n", yytext); return 18;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 168 "regex.l"
+#line 203 "regex.l"
 {printf("<%s, IGUAL>\n", yytext); return 19;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 169 "regex.l"
+#line 204 "regex.l"
 {printf("<%s, PONTO_VIRGULA>\n", yytext); return 20;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 170 "regex.l"
+#line 205 "regex.l"
 {printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 21;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 171 "regex.l"
+#line 206 "regex.l"
 {printf("<%s, DOIS_PONTOS>\n", yytext); return 22;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 172 "regex.l"
+#line 207 "regex.l"
 {printf("<%s, MULT>\n", yytext); return 23;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 173 "regex.l"
+#line 208 "regex.l"
 {printf("<%s, DIV>\n", yytext); return 24;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 174 "regex.l"
+#line 209 "regex.l"
 {printf("<%s, SOMA>\n", yytext); return 25;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 175 "regex.l"
+#line 210 "regex.l"
 {printf("<%s, SUB>\n", yytext); return 26;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 176 "regex.l"
+#line 211 "regex.l"
 {printf("<%s, SIMBOLO_APAR>\n", yytext); return 27;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 177 "regex.l"
+#line 212 "regex.l"
 {printf("<%s, SIMBOLO_FPAR>\n", yytext); return 28;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 178 "regex.l"
+#line 213 "regex.l"
 {printf("<%s, DIFERENTE>\n", yytext); return 29;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 179 "regex.l"
+#line 214 "regex.l"
 {printf("<%s, MAIOR_IGUAL>\n", yytext); return 30;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 180 "regex.l"
+#line 215 "regex.l"
 {printf("<%s, MENOR_IGUAL>\n", yytext); return 31;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 181 "regex.l"
+#line 216 "regex.l"
 {printf("<%s, MAIOR>\n", yytext); return 32;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 182 "regex.l"
+#line 217 "regex.l"
 {printf("<%s, MENOR>\n", yytext); return 33;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 183 "regex.l"
+#line 218 "regex.l"
 {printf("<%s, PONTO>\n", yytext); return 34;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 185 "regex.l"
+#line 220 "regex.l"
 {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "nulo") != 0){
 				printf("<%s, %s>\n", yytext, reserved.return_message); 
@@ -1009,15 +1044,15 @@ YY_RULE_SETUP
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 193 "regex.l"
+#line 228 "regex.l"
 {nlines++;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 195 "regex.l"
+#line 230 "regex.l"
 ECHO;
 	YY_BREAK
-#line 1021 "lex.yy.c"
+#line 1056 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2022,7 +2057,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 195 "regex.l"
+#line 230 "regex.l"
 
 int yywrap(void)
 {

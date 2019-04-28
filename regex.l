@@ -40,7 +40,7 @@ struct reserved_word find_reserved_words(char *word){
 
 	if(strcmp(reserveds_words[position].word, word) == 0)
 		return reserveds_words[position];
-	
+
 	struct reserved_word nulo;
 	nulo.word = "nulo";
 
@@ -50,35 +50,6 @@ struct reserved_word find_reserved_words(char *word){
 void insert_word(int i){
 	char * word;
 	char * return_message;
-	/*
-	program
-	b
-	e
-	c
-	v
-	r
-	i
-	p
-	e
-	r
-	w
-	w
-	i
-	t
-	d
-
-	program procedure
-	begin
-	end else
-	const
-	var
-	real read
-	integer
-	write while
-	if
-	then
-	do
-	*/
 
 	if(i == 0){
 		word = (char*)malloc(sizeof(char) * 7);
@@ -219,7 +190,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 
 {IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "nulo") != 0){
-				printf("<%s, %s>\n", yytext, reserved.return_message); 
+				printf("<%s, %s>\n", yytext, reserved.return_message);
 				return reserved.return_value;
 			}
 			printf("<%s, IDENT>\n", yytext); return 35;
