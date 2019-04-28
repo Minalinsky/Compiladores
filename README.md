@@ -19,9 +19,9 @@ Relatório.
 **Tratar erros:**
 - [ ] Símbolo não pertencente ao conjunto de símbolos
 - [ ] terminais da linguagem: @";
-- [ ] "Identificador mal formado: j@, 1a";
+- [ x ] "Identificador mal formado: j@, 1a";
 - [ ] "Tamanho do identificador: minha_variável_para_..."
-- [ ] "Número mal formado: 2.a3"
+- [ x ] "Número mal formado: 2.a3"
 - [ ] "Fim de arquivo inesperado (comentário não fechado): {..
 
 
