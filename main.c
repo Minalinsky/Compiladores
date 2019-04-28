@@ -3,6 +3,7 @@
 
 extern int yylex();
 extern int yylineno();
+extern void create_hash();
 extern char* yytext;
 extern int nlines;
 
@@ -49,6 +50,7 @@ char* tokenType(int ntoken){ //nao podemos alterar os returns do regex.l devido 
 }
 
 int main(int argc, char const *argv[]) {
+	create_hash();
   int ntoken, vtoken;
   FILE *fp = fopen("tokens.txt", "w+");
 
