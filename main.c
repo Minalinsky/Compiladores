@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 extern int yylex();
 extern int yylineno();
@@ -58,10 +59,11 @@ int main(int argc, char const *argv[]) {
     printf("\ntipo do token: %d ", ntoken);
     printf("\ntoken: %s\n\n", yytext);
 
-    fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
-
     // Tratar os erros aqui!
-
+    if((ntoken == 35) && (strlen(yytext) > 30)){
+        fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
+    }
+    else{fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));}
 
     ntoken = yylex();
   }

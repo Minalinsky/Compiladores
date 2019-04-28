@@ -52,6 +52,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 {IDENT} {printf("<%s, IDENT>\n", yytext); return 35;}
 "\n" {nlines++;}
 
+. {printf("entrada invalida: %s\n", yytext); return 0;}
 %%
 
 int yywrap(void)
