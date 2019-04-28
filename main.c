@@ -2,11 +2,13 @@
 
 extern int yylex();
 extern int yylineno();
+extern void create_hash();
 extern char* yytext;
 extern int nlines;
 
 
 int main(int argc, char const *argv[]) {
+	create_hash();
   int ntoken, vtoken;
 
   ntoken = yylex();

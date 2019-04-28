@@ -15,7 +15,7 @@ struct reserved_word{
 
 struct reserved_word reserveds_words[SIZE];
 
-void insert_word(char * word, char * return_message, int return_value){
+void insert_word_aux(char * word, char * return_message, int return_value){
 	int length = strlen(word);
 	int asc_value = 0;
 
@@ -47,16 +47,109 @@ struct reserved_word find_reserved_words(char *word){
 	return nulo;
 }
 
-void create_hash(){
-	insert_word("program", "SIMBOLO_PROGRAM", 3);
-	insert_word("begin", "SIMBOLO_BEGIN", 4);
-	insert_word("end", "SIMBOLO_END", 5);
-	insert_word("const", "SIMBOLO_CONST", 6);
-	insert_word("var", "SIMBOLO_VAR", 7);
-	insert_word("real", "SIMBOLO_REAL", 8);
-	insert_word("integer", "SIMBOLO_INTEGER", 9);
-	insert_word("procedure", "SIMBOLO_PROCEDURE", 10);
+void insert_word(int i){
+	char * word;
+	char * return_message;
+
+	if(i == 0){
+		word = (char*)malloc(sizeof(char) * 7);
+		word = "program";
+		return_message = (char*)malloc(sizeof(char) * 15);
+		return_message = "SIMBOLO_PROGRAM";
+	}
+	else if(i == 1){
+		word = (char*)malloc(sizeof(char) * 5);
+		word = "begin";
+		return_message = (char*)malloc(sizeof(char) * 13);
+		return_message = "SIMBOLO_BEGIN";
+	}
+	else if(i == 2){
+		word = (char*)malloc(sizeof(char) * 3);
+		word = "end";
+		return_message = (char*)malloc(sizeof(char) * 11);
+		return_message = "SIMBOLO_END";
+	}
+	else if(i == 3){
+		word = (char*)malloc(sizeof(char) * 5);
+		word = "const";
+		return_message = (char*)malloc(sizeof(char) * 13);
+		return_message = "SIMBOLO_CONST";
+	}
+	else if(i == 4){
+		word = (char*)malloc(sizeof(char) * 3);
+		word = "var";
+		return_message = (char*)malloc(sizeof(char) * 11);
+		return_message = "SIMBOLO_VAR";
+	}
+	else if(i == 5){
+		word = (char*)malloc(sizeof(char) * 4);
+		word = "real";
+		return_message = (char*)malloc(sizeof(char) * 12);
+		return_message = "SIMBOLO_REAL";
+	}
+	else if(i == 6){
+		word = (char*)malloc(sizeof(char) * 7);
+		word = "integer";
+		return_message = (char*)malloc(sizeof(char) * 15);
+		return_message = "SIMBOLO_INTEGER";
+	}
+	else if(i == 7){
+		word = (char*)malloc(sizeof(char) * 9);
+		word = "procedure";
+		return_message = (char*)malloc(sizeof(char) * 17);
+		return_message = "SIMBOLO_PROCEDURE";
+	}
+	else if(i == 8){
+		word = (char*)malloc(sizeof(char) * 4);
+		word = "else";
+		return_message = (char*)malloc(sizeof(char) * 12);
+		return_message = "SIMBOLO_ELSE";
+	}
+	else if(i == 9){
+		word = (char*)malloc(sizeof(char) * 4);
+		word = "read";
+		return_message = (char*)malloc(sizeof(char) * 12);
+		return_message = "SIMBOLO_READ";
+	}
+	else if(i == 10){
+		word = (char*)malloc(sizeof(char) * 5);
+		word = "write";
+		return_message = (char*)malloc(sizeof(char) * 13);
+		return_message = "SIMBOLO_WRITE";
+	}
+	else if(i == 11){
+		word = (char*)malloc(sizeof(char) * 5);
+		word = "while";
+		return_message = (char*)malloc(sizeof(char) * 13);
+		return_message = "SIMBOLO_WHILE";
+	}
+	else if(i == 12){
+		word = (char*)malloc(sizeof(char) * 2);
+		word = "if";
+		return_message = (char*)malloc(sizeof(char) * 10);
+		return_message = "SIMBOLO_IF";
+	}
+	else if(i == 13){
+		word = (char*)malloc(sizeof(char) * 4);
+		word = "then";
+		return_message = (char*)malloc(sizeof(char) * 12);
+		return_message = "SIMBOLO_THEN";
+	}
+	else if(i == 14){
+		word = (char*)malloc(sizeof(char) * 2);
+		word = "do";
+		return_message = (char*)malloc(sizeof(char) * 10);
+		return_message = "SIMBOLO_DO";
+	}
+
+	insert_word_aux(word, return_message, (i + 3));
 }
+
+void create_hash(){
+	for(int i = 0; i < 7; i++)
+		insert_word(i);
+}
+
 %}
 
 NUMERO_INT [0-9]
@@ -71,14 +164,6 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 {NUMERO_INT}+ {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
 {NUMERO_REAL} {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
 
-
-"else" {printf("<%s, SIMBOLO_ELSE>\n", yytext); return 11;}
-"read" {printf("<%s, SIMBOLO_READ>\n", yytext); return 12;}
-"write" {printf("<%s, SIMBOLO_WRITE>\n", yytext); return 13;}
-"while" {printf("<%s, SIMBOLO_WHILE>\n", yytext); return 14;}
-"if" {printf("<%s, SIMBOLO_IF>\n", yytext); return 15;}
-"then" {printf("<%s, SIMBOLO_THEN>\n", yytext); return 16;}
-"do" {printf("<%s, SIMBOLO_DO>\n", yytext); return 17;}
 ":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 18;}
 "=" {printf("<%s, IGUAL>\n", yytext); return 19;}
 ";" {printf("<%s, PONTO_VIRGULA>\n", yytext); return 20;}
@@ -100,16 +185,15 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 {IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "nulo") != 0){
 				printf("<%s, %s>\n", yytext, reserved.return_message); 
-				return reserved.return_value;}
-			printf("<%s, IDENT>\n", yytext); return 35;}
+				return reserved.return_value;
+			}
+			printf("<%s, IDENT>\n", yytext); return 35;
+		}
 
 "\n" {nlines++;}
 
 %%
 int yywrap(void)
 {
-	create_hash();
   	return 1;
 }
-
-
