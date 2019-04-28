@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 15
+#define SIZE 16
 
 int nlines=1, ntoken;
 
@@ -78,6 +78,7 @@ void insert_word(int i){
 	if
 	then
 	do
+	for
 	*/
 
 	if(i == 0){
@@ -199,23 +200,23 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 {NUMERO_INT}+ {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
 {NUMERO_REAL} {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
 
-":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 18;}
-"=" {printf("<%s, IGUAL>\n", yytext); return 19;}
-";" {printf("<%s, PONTO_VIRGULA>\n", yytext); return 20;}
-"," {printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 21;}
-":" {printf("<%s, DOIS_PONTOS>\n", yytext); return 22;}
-"*" {printf("<%s, MULT>\n", yytext); return 23;}
-"/" {printf("<%s, DIV>\n", yytext); return 24;}
-"+" {printf("<%s, SOMA>\n", yytext); return 25;}
-"-" {printf("<%s, SUB>\n", yytext); return 26;}
-"(" {printf("<%s, SIMBOLO_APAR>\n", yytext); return 27;}
-")" {printf("<%s, SIMBOLO_FPAR>\n", yytext); return 28;}
-"<>" {printf("<%s, DIFERENTE>\n", yytext); return 29;}
-">=" {printf("<%s, MAIOR_IGUAL>\n", yytext); return 30;}
-"<=" {printf("<%s, MENOR_IGUAL>\n", yytext); return 31;}
-">" {printf("<%s, MAIOR>\n", yytext); return 32;}
-"<" {printf("<%s, MENOR>\n", yytext); return 33;}
-"." {printf("<%s, PONTO>\n", yytext); return 34;}
+":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 19;}
+"=" {printf("<%s, IGUAL>\n", yytext); return 20;}
+";" {printf("<%s, PONTO_VIRGULA>\n", yytext); return 21;}
+"," {printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 22;}
+":" {printf("<%s, DOIS_PONTOS>\n", yytext); return 23;}
+"*" {printf("<%s, MULT>\n", yytext); return 24;}
+"/" {printf("<%s, DIV>\n", yytext); return 25;}
+"+" {printf("<%s, SOMA>\n", yytext); return 26;}
+"-" {printf("<%s, SUB>\n", yytext); return 27;}
+"(" {printf("<%s, SIMBOLO_APAR>\n", yytext); return 28;}
+")" {printf("<%s, SIMBOLO_FPAR>\n", yytext); return 29;}
+"<>" {printf("<%s, DIFERENTE>\n", yytext); return 30;}
+">=" {printf("<%s, MAIOR_IGUAL>\n", yytext); return 31;}
+"<=" {printf("<%s, MENOR_IGUAL>\n", yytext); return 32;}
+">" {printf("<%s, MAIOR>\n", yytext); return 33;}
+"<" {printf("<%s, MENOR>\n", yytext); return 34;}
+"." {printf("<%s, PONTO>\n", yytext); return 35;}
 
 {IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "nulo") != 0){
