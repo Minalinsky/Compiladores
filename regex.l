@@ -12,6 +12,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 
 [ \t]     ;
 {COMENTARIO}  ;
+{NUMERO_INT}+[^{NUMERO_INT}]{NUMERO_INT}* {printf("Numero mal formatado: %s\n", yytext); return -1;} 
 
 {NUMERO_INT}+ {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
 {NUMERO_REAL} {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
