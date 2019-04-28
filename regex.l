@@ -21,7 +21,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 {NUMERO_INT}[_@#$%&a-zA-Z]+{DIGITO}*  {printf("Numero mal formatado: %s\n", yytext); return -1;}
 {NUMERO_INT}"."{DIGITO}*[_@#$%&a-zA-Z]+{DIGITO}* {printf("Numero mal formatado: %s\n", yytext); return -1;}
 
-[_@#$%&0-9]+[a-zA-Z0-9]* {printf("Identificador mal formatado: %s\n", yytext); return -1; REJECT}
+[_@#$%&0-9]+[a-zA-Z0-9]* {printf("Identificador mal formatado: %s\n", yytext); return -1;}
 
 
 "program" {printf("<%s, SIMBOLO_PROGRAM>\n", yytext); return 3;}
