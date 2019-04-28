@@ -55,15 +55,18 @@ int main(int argc, char const *argv[]) {
   ntoken = yylex();
   // Função principal, futuramente substituida pelo analisador sintático
   while(ntoken){
-    printf("Linha %d: ", nlines);
-    printf("\ntipo do token: %d ", ntoken);
-    printf("\ntoken: %s\n\n", yytext);
-
     // Tratar os erros aqui!
-    if((ntoken == 35) && (strlen(yytext) > 30)){
+    //tratando tamanho dos identificadores
+    if((ntoken == 35) && (strlen(yytext) > 32)){
+        printf("%s - ERRO_TAMANHO_ID", yytext);
         fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
     }
-    else{fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));}
+    else{
+        printf("Linha %d: ", nlines);
+        printf("\ntipo do token: %d ", ntoken);
+        printf("\ntoken: %s\n\n", yytext);
+        fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
+    }
 
     ntoken = yylex();
   }
