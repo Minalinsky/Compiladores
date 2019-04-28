@@ -2,8 +2,8 @@ program p;
 {comentario de
 var x: integer;
 begin
-	x:=var@ra;
-	x:=12a;
+	x:=3var@ra;
+	x:=1234a;
 	while (x<3) do
 	x:=x+1;
 end.
