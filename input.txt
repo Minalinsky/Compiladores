@@ -1,5 +1,5 @@
 program p;
-{comentario de}
+{comentario de
 var x: integer;
 begin
 	x:=var@ra;

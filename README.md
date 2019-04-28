@@ -22,7 +22,7 @@ Relatório.
 - [x] "Identificador mal formado: j@, 1a";
 - [x] "Tamanho do identificador: minha_variável_para_..."
 - [x] "Número mal formado: 2.a3"
-- [ ] "Fim de arquivo inesperado (comentário não fechado): {..
+- [x] "Fim de arquivo inesperado (comentário não fechado): {..
 
 
 ### Relatório Justificativas:
