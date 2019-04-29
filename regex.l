@@ -7,6 +7,7 @@
 #define RESERVERD_WORDS 17
 
 int nlines=1, ntoken;
+int primes[] = {71, 67, 61, 59, 53, 47, 43, 41, 37, 31, 29, 23, 19, 17, 13, 11, 7, 5, 3, 2};
 
 struct reserved_word{	// 'objeto' que será inserido na hash
 	char * word;
@@ -21,10 +22,15 @@ void insert_word_aux(char * word, char * return_message, int return_value){
 	int length = strlen(word);
 	int asc_value = 0;
 
-	for(int i = 0; i < length; i++) //função de espalhamento
-		asc_value += (int)word[i];
+	for(int i = 0; i < length; i++){
+		asc_value += (int)word[i] * word[i];
+		//asc_value %=  size;
+	}
+
+
 
 	int position = asc_value % SIZE;
+	printf("Inserindo %s na posição: %d\n", word, position);
 
 	reserveds_words[position].word = word; 	// dados inseridos
 	reserveds_words[position].return_message = return_message;
@@ -37,10 +43,13 @@ struct reserved_word find_reserved_words(char *word){
 	if(length <= 9){
 		int asc_value = 0;
 
-		for(int i = 0; i < length; i++)
-			asc_value += (int)word[i];
+		for(int i = 0; i < length; i++){
+			asc_value += (int)word[i] * word[i];
+			//asc_value /=  length ;
+		}
 
 		int position = asc_value % SIZE;
+		printf("Buscando %s na posição %d\n\n", word, position);
 
 		if(strcmp(reserveds_words[position].word, word) == 0)
 			return reserveds_words[position];
