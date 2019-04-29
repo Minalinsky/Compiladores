@@ -10,7 +10,6 @@
 #define FALSE 0
 
 int nlines=1, ntoken;
-int primes[] = {71, 67, 61, 59, 53, 47, 43, 41, 37, 31, 29, 23, 19, 17, 13, 11, 7, 5, 3, 2};
 
 struct reserved_word{	// 'objeto' que será inserido na hash
 	char * word;
@@ -37,7 +36,7 @@ void insert_word_aux(char * word, char * return_message, int return_value){
 	//asc_value = (int)asc_value/length;
 
 	int position = asc_value % SIZE;
-	printf("Inserindo %s na posição: %d, asc = %d\n", word, position, asc_value);
+	//printf("Inserindo %s na posição: %d, asc = %d\n", word, position, asc_value);
 	positions_occuppieds[positions_counter] = position;
 	positions_counter++;
 

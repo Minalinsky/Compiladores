@@ -8,6 +8,8 @@ extern void create_hash();
 extern char* yytext;
 extern int nlines;
 
+// Essa função só é utilizada para manter toda a escrita do arquivo tokens.txt em
+// um único lugar
 char* tokenType(int ntoken){ //nao podemos alterar os returns do regex.l devido ao laço while na main()
     switch(ntoken){
         case 1: return "NUMERO_INT";
@@ -71,9 +73,9 @@ int main(int argc, char const *argv[]) {
         fprintf(fp, "%s - ERRO\n", yytext);
     }
     else{
-        printf("Linha %d: ", nlines);
-        printf("\ntipo do token: %d ", ntoken);
-        printf("\ntoken: %s\n", yytext);
+        // printf("Linha %d: ", nlines);
+        // printf("\ntipo do token: %d ", ntoken);
+        // printf("\ntoken: %s\n", yytext);
         fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
     }
 
