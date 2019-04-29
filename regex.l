@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 16
+#define SIZE 25
+#define RESERVERD_WORDS 17
 
 int nlines=1, ntoken;
 
@@ -149,12 +150,18 @@ void insert_word(int i){
 		return_message = (char*)malloc(sizeof(char) * 11);
 		return_message = "SIMBOLO_FOR";
 	}
+	else if(i == 16){
+		word = (char*)malloc(sizeof(char) * 3);
+		word = "to";
+		return_message = (char*)malloc(sizeof(char) * 11);
+		return_message = "SIMBOLO_TO";
+	}
 
 	insert_word_aux(word, return_message, (i + 3));
 }
 
 void create_hash(){
-	for(int i = 0; i < SIZE; i++)
+	for(int i = 0; i < RESERVERD_WORDS; i++)
 		insert_word(i);
 }
 
