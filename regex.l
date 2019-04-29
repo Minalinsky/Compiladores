@@ -3,33 +3,35 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 25
+#define SIZE 25	//HASH por definição deve ter um espaço maior que o número de entrada
 #define RESERVERD_WORDS 17
 
 int nlines=1, ntoken;
 
-struct reserved_word{
+struct reserved_word{	// 'objeto' que será inserido na hash
 	char * word;
 	char * return_message;
 	int return_value;
 };
 
-struct reserved_word reserveds_words[SIZE];
+struct reserved_word reserveds_words[SIZE];	//Hash fixa e estática
 
+// Função de inserção na hash
 void insert_word_aux(char * word, char * return_message, int return_value){
 	int length = strlen(word);
 	int asc_value = 0;
 
-	for(int i = 0; i < length; i++)
+	for(int i = 0; i < length; i++) //função de espalhamento
 		asc_value += (int)word[i];
 
 	int position = asc_value % SIZE;
 
-	reserveds_words[position].word = word;
+	reserveds_words[position].word = word; 	// dados inseridos
 	reserveds_words[position].return_message = return_message;
 	reserveds_words[position].return_value = return_value;
 }
 
+// Função que busca as palavras na hash
 struct reserved_word find_reserved_words(char *word){
 	int length = strlen(word);
 	if(length <= 9){
@@ -50,6 +52,7 @@ struct reserved_word find_reserved_words(char *word){
 	return nulo;
 }
 
+// Função que inicializa a hash com as palavras reservadas
 void insert_word(int i){
 	char * word;
 	char * return_message;
@@ -157,7 +160,7 @@ void insert_word(int i){
 		return_message = "SIMBOLO_TO";
 	}
 
-	insert_word_aux(word, return_message, (i + 3));
+	insert_word_aux(word, return_message, (i + 3)); // Realmente inserindo na hash
 }
 
 void create_hash(){
@@ -187,7 +190,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 [_@#$%&]+[a-zA-Z0-9]* {printf("Identificador mal formatado: %s\n", yytext); return -1;}
 ["{"][ \ta-zA-Z_]* {printf("Comentário não fechado: %s\n", yytext); return -1;}
 
-":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 19;}
+":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 37;}
 "=" {printf("<%s, IGUAL>\n", yytext); return 20;}
 ";" {printf("<%s, PONTO_VIRGULA>\n", yytext); return 21;}
 "," {printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 22;}
