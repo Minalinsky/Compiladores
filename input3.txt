@@ -1,0 +1,15 @@
+program input3;
+procedure testprocedure(var y: real);
+	var x: const;
+	var z: integer;
+	begin
+		var result: real;
+		result := 2*x+y;
+		z := 12a;
+		y:= _3.14159;
+		z := 12.3a4;
+		
+		a =12+2*cos(3.14);
+		a2= sen(45)-10*(300);
+
+	end

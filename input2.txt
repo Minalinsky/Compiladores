@@ -1,0 +1,11 @@
+program lalg;
+{comentario inicial}
+var x: integer;
+var minha_variavel_que_tem_o_nome_muito_grande: real;
+begin
+	if(x=5) then
+		x:=10;
+	else
+		x := x/2;
+{comentario nao fechado
+end.
