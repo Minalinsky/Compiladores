@@ -163,9 +163,9 @@ void insert_word(int i){
 		return_message = "SIMBOLO_FOR";
 	}
 	else if(i == 16){
-		word = (char*)malloc(sizeof(char) * 3);
+		word = (char*)malloc(sizeof(char) * 2);
 		word = "to";
-		return_message = (char*)malloc(sizeof(char) * 11);
+		return_message = (char*)malloc(sizeof(char) * 10);
 		return_message = "SIMBOLO_TO";
 	}
 
