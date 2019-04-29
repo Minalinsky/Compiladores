@@ -68,7 +68,7 @@ int main(int argc, char const *argv[]) {
     }
     else if(ntoken == -1){
         printf("%s - ERRO\n", yytext);
-        fprintf(fp, "%s - ERRO\n", yytext);i
+        fprintf(fp, "%s - ERRO\n", yytext);
     }
     else{
         printf("Linha %d: ", nlines);
@@ -78,7 +78,6 @@ int main(int argc, char const *argv[]) {
     }
 
     ntoken = yylex();
-    printf("ntoken\n");
   }
 
   fclose(fp);

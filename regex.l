@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 25	//HASH por definição deve ter um espaço maior que o número de entrada
+#define SIZE 89	//HASH com um espaço maior que o número de entrada, evitando colisões
 #define RESERVERD_WORDS 17
 
 int nlines=1, ntoken;
@@ -17,20 +17,26 @@ struct reserved_word{	// 'objeto' que será inserido na hash
 
 struct reserved_word reserveds_words[SIZE];	//Hash fixa e estática
 
+// Variáveis auxiliares para controle dos slots vazios da hash
+int positions_occuppieds[RESERVERD_WORDS];
+int positions_counter = 0;
+
 // Função de inserção na hash
 void insert_word_aux(char * word, char * return_message, int return_value){
 	int length = strlen(word);
 	int asc_value = 0;
 
 	for(int i = 0; i < length; i++){
-		asc_value += (int)word[i] * word[i];
+		asc_value += (int)word[i];
 		//asc_value %=  size;
 	}
 
-
+	//asc_value = (int)asc_value/length;
 
 	int position = asc_value % SIZE;
-	printf("Inserindo %s na posição: %d\n", word, position);
+	printf("Inserindo %s na posição: %d, asc = %d\n", word, position, asc_value);
+	positions_occuppieds[positions_counter] = position;
+	positions_counter++;
 
 	reserveds_words[position].word = word; 	// dados inseridos
 	reserveds_words[position].return_message = return_message;
@@ -44,19 +50,19 @@ struct reserved_word find_reserved_words(char *word){
 		int asc_value = 0;
 
 		for(int i = 0; i < length; i++){
-			asc_value += (int)word[i] * word[i];
+			asc_value += (int)word[i];
 			//asc_value /=  length ;
 		}
 
 		int position = asc_value % SIZE;
-		printf("Buscando %s na posição %d\n\n", word, position);
+		//printf("Buscando %s na posição %d\n\n", word, position);
 
 		if(strcmp(reserveds_words[position].word, word) == 0)
 			return reserveds_words[position];
 	}
 
 	struct reserved_word nulo;
-	nulo.word = "nulo";
+	nulo.word = "@null";
 
 	return nulo;
 }
@@ -173,8 +179,18 @@ void insert_word(int i){
 }
 
 void create_hash(){
+	// Insere as palavras reservadas
 	for(int i = 0; i < RESERVERD_WORDS; i++)
 		insert_word(i);
+
+	// Indica as posições vazias da hash como inválidas
+	for(int i = 0; i < SIZE; i++){
+		for(int j = 0; j < RESERVERD_WORDS; j++){
+			if(i == positions_occuppieds[j])
+				break;
+			reserveds_words[i].word = "@null";
+		}
+	}
 }
 
 %}
@@ -218,7 +234,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 "." {printf("<%s, PONTO>\n", yytext); return 36;}
 
 {IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
-			if(strcmp(reserved.word, "nulo") != 0){
+			if(strcmp(reserved.word, "@null") != 0){
 				printf("<%s, %s>\n", yytext, reserved.return_message);
 				return reserved.return_value;
 			}
