@@ -3,6 +3,7 @@
 
 extern int yylex();
 extern int yylineno();
+extern void create_hash();
 extern char* yytext;
 extern int nlines;
 
@@ -25,30 +26,33 @@ char* tokenType(int ntoken){ //nao podemos alterar os returns do regex.l devido 
         case 15: return "SIMBOLO_IF";
         case 16: return "SIMBOLO_THEN";
         case 17: return "SIMBOLO_DO";
-        case 18: return "ATRIBUICAO";
-        case 19: return "IGUAL";
-        case 20: return "PONTO_VIRGULA";
-        case 21: return "SIMBOLO_VIRGULA";
-        case 22: return "DOIS_PONTOS";
-        case 23: return "MULT";
-        case 24: return "DIV";
-        case 25: return "SOMA";
-        case 26: return "SUB";
-        case 27: return "SIMBOLO_APAR";
-        case 28: return "SIMBOLO_FPAR";
-        case 29: return "DIFERENTE";
-        case 30: return "MAIOR_IGUAL";
-        case 31: return "MENOR_IGUAL";
-        case 32: return "MAIOR";
-        case 33: return "MENOR";
-        case 34: return "PONTO";
-        case 35: return "IDENT";
+        case 18: return "SIMBOLO_FOR";
+        case 19: return "SIMBOLO_TO";
+        case 20: return "IGUAL";
+        case 21: return "PONTO_VIRGULA";
+        case 22: return "SIMBOLO_VIRGULA";
+        case 23: return "DOIS_PONTOS";
+        case 24: return "MULT";
+        case 25: return "DIV";
+        case 26: return "SOMA";
+        case 27: return "SUB";
+        case 28: return "SIMBOLO_APAR";
+        case 29: return "SIMBOLO_FPAR";
+        case 30: return "DIFERENTE";
+        case 31: return "MAIOR_IGUAL";
+        case 32: return "MENOR_IGUAL";
+        case 33: return "MAIOR";
+        case 34: return "MENOR";
+        case 35: return "PONTO";
+        case 36: return "IDENT";
+        case 37: return "ATRIBUICAO";
         default: return "";
     }
     return "";
 }
 
 int main(int argc, char const *argv[]) {
+	create_hash();
   int ntoken, vtoken;
   FILE *fp = fopen("tokens.txt", "w+");
 
@@ -57,7 +61,7 @@ int main(int argc, char const *argv[]) {
   while(ntoken){
     // Tratar os erros aqui!
     //tratando tamanho dos identificadores
-    if((ntoken == 35) && (strlen(yytext) > 32)){
+    if((ntoken == 36) && (strlen(yytext) > 32)){
         printf("Tamanho do identificador incompativel: %s\n", yytext);
         fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
     }
@@ -72,6 +76,6 @@ int main(int argc, char const *argv[]) {
     ntoken = yylex();
   }
 
- fclose(fp);
+  fclose(fp);
   return 0;
 }

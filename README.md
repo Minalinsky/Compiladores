@@ -12,13 +12,13 @@ make
 
 ~~Função principal que é chamada várias vezes;~~
 
-Implementação da tabela de palavras reservadas;
+~~Implementação da tabela de palavras reservadas;~~
 
 Relatório.
 
 **Tratar erros:**
-- [ ] Símbolo não pertencente ao conjunto de símbolos
-- [ ] terminais da linguagem: @";
+- [x] Símbolo não pertencente ao conjunto de símbolos
+- [x] terminais da linguagem: @";
 - [x] "Identificador mal formado: j@, 1a";
 - [x] "Tamanho do identificador: minha_variável_para_..."
 - [x] "Número mal formado: 2.a3"
