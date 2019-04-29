@@ -68,9 +68,9 @@ int main(int argc, char const *argv[]) {
         fprintf(fp, "%s - ERRO\n", yytext);
     }
     else{
-        printf("Linha %d: ", nlines);
-        printf("\ntipo do token: %d ", ntoken);
-        printf("\ntoken: %s\n", yytext);
+        // printf("Linha %d: ", nlines);
+        // printf("\ntipo do token: %d ", ntoken);
+        // printf("\ntoken: %s\n", yytext);
         fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
     }
 
