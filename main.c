@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -26,24 +27,26 @@ char* tokenType(int ntoken){ //nao podemos alterar os returns do regex.l devido 
         case 15: return "SIMBOLO_IF";
         case 16: return "SIMBOLO_THEN";
         case 17: return "SIMBOLO_DO";
-        case 18: return "ATRIBUICAO";
-        case 19: return "IGUAL";
-        case 20: return "PONTO_VIRGULA";
-        case 21: return "SIMBOLO_VIRGULA";
-        case 22: return "DOIS_PONTOS";
-        case 23: return "MULT";
-        case 24: return "DIV";
-        case 25: return "SOMA";
-        case 26: return "SUB";
-        case 27: return "SIMBOLO_APAR";
-        case 28: return "SIMBOLO_FPAR";
-        case 29: return "DIFERENTE";
-        case 30: return "MAIOR_IGUAL";
-        case 31: return "MENOR_IGUAL";
-        case 32: return "MAIOR";
-        case 33: return "MENOR";
-        case 34: return "PONTO";
-        case 35: return "IDENT";
+        case 18: return "SIMBOLO_FOR";
+        case 19: return "SIMBOLO_TO";
+        case 20: return "ATRIBUICAO";
+        case 21: return "IGUAL";
+        case 22: return "PONTO_VIRGULA";
+        case 23: return "SIMBOLO_VIRGULA";
+        case 24: return "DOIS_PONTOS";
+        case 25: return "MULT";
+        case 26: return "DIV";
+        case 27: return "SOMA";
+        case 28: return "SUB";
+        case 29: return "SIMBOLO_APAR";
+        case 30: return "SIMBOLO_FPAR";
+        case 31: return "DIFERENTE";
+        case 32: return "MAIOR_IGUAL";
+        case 33: return "MENOR_IGUAL";
+        case 34: return "MAIOR";
+        case 35: return "MENOR";
+        case 36: return "PONTO";
+        case 37: return "IDENT";
         default: return "";
     }
     return "";
@@ -59,13 +62,13 @@ int main(int argc, char const *argv[]) {
   while(ntoken){
     // Tratar os erros aqui!
     //tratando tamanho dos identificadores
-    if((ntoken == 35) && (strlen(yytext) > 32)){
+    if((ntoken == 37) && (strlen(yytext) > 32)){
         printf("Tamanho do identificador incompativel: %s\n", yytext);
         fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
     }
     else if(ntoken == -1){
         printf("%s - ERRO\n", yytext);
-        fprintf(fp, "%s - ERRO\n", yytext);
+        fprintf(fp, "%s - ERRO\n", yytext);i
     }
     else{
         printf("Linha %d: ", nlines);
@@ -75,8 +78,9 @@ int main(int argc, char const *argv[]) {
     }
 
     ntoken = yylex();
+    printf("ntoken\n");
   }
 
- fclose(fp);
+  fclose(fp);
   return 0;
 }

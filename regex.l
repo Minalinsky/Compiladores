@@ -3,85 +3,68 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 16
+#define SIZE 25	//HASH por definição deve ter um espaço maior que o número de entrada
+#define RESERVERD_WORDS 17
 
 int nlines=1, ntoken;
+int primes[] = {71, 67, 61, 59, 53, 47, 43, 41, 37, 31, 29, 23, 19, 17, 13, 11, 7, 5, 3, 2};
 
-struct reserved_word{
+struct reserved_word{	// 'objeto' que será inserido na hash
 	char * word;
 	char * return_message;
 	int return_value;
 };
 
-struct reserved_word reserveds_words[SIZE];
+struct reserved_word reserveds_words[SIZE];	//Hash fixa e estática
 
+// Função de inserção na hash
 void insert_word_aux(char * word, char * return_message, int return_value){
 	int length = strlen(word);
 	int asc_value = 0;
 
-	for(int i = 0; i < length; i++)
-		asc_value += (int)word[i];
+	for(int i = 0; i < length; i++){
+		asc_value += (int)word[i] * word[i];
+		//asc_value %=  size;
+	}
+
+
 
 	int position = asc_value % SIZE;
+	printf("Inserindo %s na posição: %d\n", word, position);
 
-	reserveds_words[position].word = word;
+	reserveds_words[position].word = word; 	// dados inseridos
 	reserveds_words[position].return_message = return_message;
 	reserveds_words[position].return_value = return_value;
 }
 
+// Função que busca as palavras na hash
 struct reserved_word find_reserved_words(char *word){
 	int length = strlen(word);
 	if(length <= 9){
 		int asc_value = 0;
 
-		for(int i = 0; i < length; i++)
-			asc_value += (int)word[i];
+		for(int i = 0; i < length; i++){
+			asc_value += (int)word[i] * word[i];
+			//asc_value /=  length ;
+		}
 
 		int position = asc_value % SIZE;
+		printf("Buscando %s na posição %d\n\n", word, position);
 
 		if(strcmp(reserveds_words[position].word, word) == 0)
 			return reserveds_words[position];
 	}
-	
+
 	struct reserved_word nulo;
 	nulo.word = "nulo";
 
 	return nulo;
 }
 
+// Função que inicializa a hash com as palavras reservadas
 void insert_word(int i){
 	char * word;
 	char * return_message;
-	/*
-	program
-	b
-	e
-	c
-	v
-	r
-	i
-	p
-	e
-	r
-	w
-	w
-	i
-	t
-	d
-
-	program procedure
-	begin
-	end else
-	const
-	var
-	real read
-	integer
-	write while
-	if
-	then
-	do
-	for
-	*/
 
 	if(i == 0){
 		word = (char*)malloc(sizeof(char) * 7);
@@ -179,12 +162,18 @@ void insert_word(int i){
 		return_message = (char*)malloc(sizeof(char) * 11);
 		return_message = "SIMBOLO_FOR";
 	}
+	else if(i == 16){
+		word = (char*)malloc(sizeof(char) * 3);
+		word = "to";
+		return_message = (char*)malloc(sizeof(char) * 11);
+		return_message = "SIMBOLO_TO";
+	}
 
-	insert_word_aux(word, return_message, (i + 3));
+	insert_word_aux(word, return_message, (i + 3)); // Realmente inserindo na hash
 }
 
 void create_hash(){
-	for(int i = 0; i < SIZE; i++)
+	for(int i = 0; i < RESERVERD_WORDS; i++)
 		insert_word(i);
 }
 
@@ -210,30 +199,30 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 [_@#$%&]+[a-zA-Z0-9]* {printf("Identificador mal formatado: %s\n", yytext); return -1;}
 ["{"][ \ta-zA-Z_]* {printf("Comentário não fechado: %s\n", yytext); return -1;}
 
-":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 19;}
-"=" {printf("<%s, IGUAL>\n", yytext); return 20;}
-";" {printf("<%s, PONTO_VIRGULA>\n", yytext); return 21;}
-"," {printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 22;}
-":" {printf("<%s, DOIS_PONTOS>\n", yytext); return 23;}
-"*" {printf("<%s, MULT>\n", yytext); return 24;}
-"/" {printf("<%s, DIV>\n", yytext); return 25;}
-"+" {printf("<%s, SOMA>\n", yytext); return 26;}
-"-" {printf("<%s, SUB>\n", yytext); return 27;}
-"(" {printf("<%s, SIMBOLO_APAR>\n", yytext); return 28;}
-")" {printf("<%s, SIMBOLO_FPAR>\n", yytext); return 29;}
-"<>" {printf("<%s, DIFERENTE>\n", yytext); return 30;}
-">=" {printf("<%s, MAIOR_IGUAL>\n", yytext); return 31;}
-"<=" {printf("<%s, MENOR_IGUAL>\n", yytext); return 32;}
-">" {printf("<%s, MAIOR>\n", yytext); return 33;}
-"<" {printf("<%s, MENOR>\n", yytext); return 34;}
-"." {printf("<%s, PONTO>\n", yytext); return 35;}
+":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 20;}
+"=" {printf("<%s, IGUAL>\n", yytext); return 21;}
+";" {printf("<%s, PONTO_VIRGULA>\n", yytext); return 22;}
+"," {printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 23;}
+":" {printf("<%s, DOIS_PONTOS>\n", yytext); return 24;}
+"*" {printf("<%s, MULT>\n", yytext); return 25;}
+"/" {printf("<%s, DIV>\n", yytext); return 26;}
+"+" {printf("<%s, SOMA>\n", yytext); return 27;}
+"-" {printf("<%s, SUB>\n", yytext); return 28;}
+"(" {printf("<%s, SIMBOLO_APAR>\n", yytext); return 29;}
+")" {printf("<%s, SIMBOLO_FPAR>\n", yytext); return 30;}
+"<>" {printf("<%s, DIFERENTE>\n", yytext); return 31;}
+">=" {printf("<%s, MAIOR_IGUAL>\n", yytext); return 32;}
+"<=" {printf("<%s, MENOR_IGUAL>\n", yytext); return 33;}
+">" {printf("<%s, MAIOR>\n", yytext); return 34;}
+"<" {printf("<%s, MENOR>\n", yytext); return 35;}
+"." {printf("<%s, PONTO>\n", yytext); return 36;}
 
 {IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "nulo") != 0){
-				printf("<%s, %s>\n", yytext, reserved.return_message); 
+				printf("<%s, %s>\n", yytext, reserved.return_message);
 				return reserved.return_value;
 			}
-			printf("<%s, IDENT>\n", yytext); return 36;
+			printf("<%s, IDENT>\n", yytext); return 37;
 		}
 
 "\n" {nlines++;}

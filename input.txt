@@ -1,9 +1,9 @@
 program p;
-{comentario de
+{comentario de}
 var x: integer;
 begin
+	x:=1;
 	x:=3var@ra;
-	x:=1234a;
 	while (x<3) do
 	x:=x+1;
 end.

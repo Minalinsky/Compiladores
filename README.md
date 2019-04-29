@@ -12,13 +12,13 @@ make
 
 ~~Função principal que é chamada várias vezes;~~
 
-Implementação da tabela de palavras reservadas;
+~~Implementação da tabela de palavras reservadas;~~
 
 Relatório.
 
 **Tratar erros:**
-- [ ] Símbolo não pertencente ao conjunto de símbolos
-- [ ] terminais da linguagem: @";
+- [x] Símbolo não pertencente ao conjunto de símbolos
+- [x] terminais da linguagem: @";
 - [x] "Identificador mal formado: j@, 1a";
 - [x] "Tamanho do identificador: minha_variável_para_..."
 - [x] "Número mal formado: 2.a3"
@@ -38,10 +38,10 @@ Relatório.
     - Isso será tratado no analisador sintático;
 
   - Número: verifica se existe [(underscore)@#$%&a-zA-Z] em alguma parte depois de um número:
-    - Caso seja um número no formto 12a ou 1a2 será retornado:
+    - Caso seja um número no formato 12a ou 1a2:
       - Será retornado um número mal formado (12a ou 1a2)
-    - Caso seja um número no formto 12a.344 será retornado:
-      - um número mal formatado (12a) um ponto (.) e um número inteiro (344)
+    - Caso seja um número no formato 12a.344:
+      - Será retornado um número mal formatado (12a) um ponto (.) e um número inteiro (344)
       - isso será tratado no analisador sintático.
     - Caso seja um número no formato 12a.a344 será retornado:
       - um número mal formatado (12a) um ponto (.) e um identificador (a344)
