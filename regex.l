@@ -6,6 +6,9 @@
 #define SIZE 89	//HASH com um espaço maior que o número de entrada, evitando colisões
 #define RESERVERD_WORDS 17
 
+#define TRUE 1
+#define FALSE 0
+
 int nlines=1, ntoken;
 int primes[] = {71, 67, 61, 59, 53, 47, 43, 41, 37, 31, 29, 23, 19, 17, 13, 11, 7, 5, 3, 2};
 
@@ -185,11 +188,15 @@ void create_hash(){
 
 	// Indica as posições vazias da hash como inválidas
 	for(int i = 0; i < SIZE; i++){
+		int isOcuppied = FALSE;
 		for(int j = 0; j < RESERVERD_WORDS; j++){
-			if(i == positions_occuppieds[j])
+			if(i == positions_occuppieds[j]){
+				isOcuppied = TRUE;
 				break;
-			reserveds_words[i].word = "@null";
+			}
 		}
+		if(isOcuppied == FALSE)
+			reserveds_words[i].word = "@null";
 	}
 }
 
