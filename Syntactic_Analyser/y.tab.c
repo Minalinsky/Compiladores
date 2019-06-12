@@ -1564,6 +1564,7 @@ yyreturn:
 
 
 // Função que deveria imprimir a mesagem de erro
+// Chamando essa função em syntactic.analyser.l, mas ainda não sei se da forma correta
 void yyerror(char *s){
     fprintf(stderr, "%s\n", s);
 }
@@ -1600,5 +1601,5 @@ int main(int argc, char const *argv[]) {
 //   fclose(fp);
   
   return yyparse(); //Inicializando o analisador sintático
-    
+
 }

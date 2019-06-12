@@ -461,6 +461,8 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "syntactic_analyser.l"
 #line 2 "syntactic_analyser.l"
+	void yyerror(char *s); //eliminando warning
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -662,8 +664,8 @@ void create_hash(){
 	}
 }
 
-#line 666 "lex.yy.c"
-#line 667 "lex.yy.c"
+#line 668 "lex.yy.c"
+#line 669 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -880,10 +882,10 @@ YY_DECL
 		}
 
 	{
-#line 210 "syntactic_analyser.l"
+#line 212 "syntactic_analyser.l"
 
 
-#line 887 "lex.yy.c"
+#line 889 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -942,47 +944,47 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 212 "syntactic_analyser.l"
+#line 214 "syntactic_analyser.l"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 213 "syntactic_analyser.l"
+#line 215 "syntactic_analyser.l"
 ;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 217 "syntactic_analyser.l"
+#line 219 "syntactic_analyser.l"
 {return NUMERO_INT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 218 "syntactic_analyser.l"
+#line 220 "syntactic_analyser.l"
 {return NUMERO_REAL;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 220 "syntactic_analyser.l"
+#line 222 "syntactic_analyser.l"
 {ECHO; yyerror("Numero mal formatado\n"); return -1;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 221 "syntactic_analyser.l"
+#line 223 "syntactic_analyser.l"
 {ECHO; yyerror("Numero mal formatado\n"); return -1;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 223 "syntactic_analyser.l"
+#line 225 "syntactic_analyser.l"
 {ECHO; yyerror("Identificador mal formatado\n"); return -1;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 224 "syntactic_analyser.l"
+#line 226 "syntactic_analyser.l"
 {ECHO; yyerror("Comentário não fechado\n"); return -1;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 226 "syntactic_analyser.l"
+#line 228 "syntactic_analyser.l"
 {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "@null") != 0){
 				return reserved.return_message;
@@ -993,20 +995,20 @@ YY_RULE_SETUP
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 233 "syntactic_analyser.l"
+#line 235 "syntactic_analyser.l"
 {nlines++;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 235 "syntactic_analyser.l"
+#line 237 "syntactic_analyser.l"
 {printf("entrada invalida: %s\n", yytext); return -1;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 236 "syntactic_analyser.l"
+#line 238 "syntactic_analyser.l"
 ECHO;
 	YY_BREAK
-#line 1010 "lex.yy.c"
+#line 1012 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2011,7 +2013,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 236 "syntactic_analyser.l"
+#line 238 "syntactic_analyser.l"
 
 
 int yywrap(void)

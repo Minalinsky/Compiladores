@@ -1,4 +1,6 @@
 %{
+	void yyerror(char *s); //eliminando warning
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -217,11 +219,11 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 {NUMERO_INT}+ {return NUMERO_INT;}
 {NUMERO_REAL} {return NUMERO_REAL;}
 
-{NUMERO_INT}[_@#$%&a-zA-Z]+{DIGITO}*  {ECHO; yyerror("Numero mal formatado: %s\;n", yytext); return -1;}
-{NUMERO_INT}"."{DIGITO}*[_@#$%&a-zA-Z]+{DIGITO}* {ECHO; yyerror("Numero mal formatado: %s\n", yytext); return -1;}
+{NUMERO_INT}[_@#$%&a-zA-Z]+{DIGITO}*  {ECHO; yyerror("Numero mal formatado\n"); return -1;}
+{NUMERO_INT}"."{DIGITO}*[_@#$%&a-zA-Z]+{DIGITO}* {ECHO; yyerror("Numero mal formatado\n"); return -1;}
 
-[_@#$%&]+[a-zA-Z0-9]* {ECHO; yyerror("Identificador mal formatado: %s\n", yytext); return -1;}
-["{"][ \ta-zA-Z_]* {ECHO; yyerror("Comentário não fechado: %s\n", yytext); return -1;}
+[_@#$%&]+[a-zA-Z0-9]* {ECHO; yyerror("Identificador mal formatado\n"); return -1;}
+["{"][ \ta-zA-Z_]* {ECHO; yyerror("Comentário não fechado\n"); return -1;}
 
 {IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "@null") != 0){
