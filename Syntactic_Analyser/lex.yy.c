@@ -963,22 +963,22 @@ YY_RULE_SETUP
 case 5:
 YY_RULE_SETUP
 #line 220 "syntactic_analyser.l"
-{printf("Numero mal formatado: %s\n", yytext); return -1;}
+{ECHO; yyerror("Numero mal formatado\n"); return -1;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 221 "syntactic_analyser.l"
-{printf("Numero mal formatado: %s\n", yytext); return -1;}
+{ECHO; yyerror("Numero mal formatado\n"); return -1;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 223 "syntactic_analyser.l"
-{printf("Identificador mal formatado: %s\n", yytext); return -1;}
+{ECHO; yyerror("Identificador mal formatado\n"); return -1;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 224 "syntactic_analyser.l"
-{printf("Comentário não fechado: %s\n", yytext); return -1;}
+{ECHO; yyerror("Comentário não fechado\n"); return -1;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP

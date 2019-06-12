@@ -1563,6 +1563,11 @@ yyreturn:
 #line 126 "syntactic_analyser.y" /* yacc.c:1906  */
 
 
+// Função que deveria imprimir a mesagem de erro
+void yyerror(char *s){
+    fprintf(stderr, "%s\n", s);
+}
+
 
 int main(int argc, char const *argv[]) {
     create_hash();
@@ -1593,5 +1598,7 @@ int main(int argc, char const *argv[]) {
 //   }
 
 //   fclose(fp);
-  return yyparse();
+  
+  return yyparse(); //Inicializando o analisador sintático
+    
 }
