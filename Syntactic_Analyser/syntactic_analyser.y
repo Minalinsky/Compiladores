@@ -24,6 +24,9 @@ SIMBOLO_THEN SIMBOLO_DO SIMBOLO_FOR SIMBOLO_TO
 
 %left ':' '=' ';' ',' '*' '/' '+' '-' '(' ')' '<' '>' '.'
 
+// Aqui o identificador de começo
+%start programa
+
 %%
 
 programa: SIMBOLO_PROGRAM IDENT ';' corpo 
@@ -126,31 +129,31 @@ numero: NUMERO_INT
 int main(int argc, char const *argv[]) {
     create_hash();
   int ntoken, vtoken;
-  FILE *fp = fopen("tokens.txt", "w+");
+//   FILE *fp = fopen("tokens.txt", "w+");
 
-  ntoken = yylex();
-  // Função principal, futuramente substituida pelo analisador sintático
-  while(ntoken){
-    // Tratar os erros aqui!
-    //tratando tamanho dos identificadores
-    if((ntoken == 37) && (strlen(yytext) > 32)){
-        printf("Tamanho do identificador incompativel: %s\n", yytext);
-        fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
-    }
-    else if(ntoken == -1){
-        printf("%s - ERRO\n", yytext);
-        fprintf(fp, "%s - ERRO\n", yytext);
-    }
-    else{
-        // printf("Linha %d: ", nlines);
-        // printf("\ntipo do token: %d ", ntoken);
-        // printf("\ntoken: %s\n", yytext);
-        // fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
-    }
+//   ntoken = yylex();
+//   // Função principal, futuramente substituida pelo analisador sintático
+//   while(ntoken){
+//     // Tratar os erros aqui!
+//     //tratando tamanho dos identificadores
+//     if((ntoken == 37) && (strlen(yytext) > 32)){
+//         printf("Tamanho do identificador incompativel: %s\n", yytext);
+//         fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
+//     }
+//     else if(ntoken == -1){
+//         printf("%s - ERRO\n", yytext);
+//         fprintf(fp, "%s - ERRO\n", yytext);
+//     }
+//     else{
+//         // printf("Linha %d: ", nlines);
+//         // printf("\ntipo do token: %d ", ntoken);
+//         // printf("\ntoken: %s\n", yytext);
+//         // fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
+//     }
 
-    ntoken = yylex();
-  }
+//     ntoken = yylex();
+//   }
 
-  fclose(fp);
-  return 0;
+//   fclose(fp);
+  return yyparse();
 }

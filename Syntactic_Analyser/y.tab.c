@@ -473,13 +473,13 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    29,    29,    31,    33,    35,    36,    38,    39,    41,
-      42,    44,    46,    47,    49,    50,    52,    53,    55,    57,
-      58,    60,    62,    64,    65,    67,    69,    70,    72,    73,
-      75,    76,    78,    79,    80,    81,    82,    83,    84,    86,
-      88,    89,    90,    91,    92,    93,    95,    97,    98,    99,
-     101,   102,   104,   105,   107,   109,   110,   112,   113,   115,
-     116,   117,   119,   120
+       0,    32,    32,    34,    36,    38,    39,    41,    42,    44,
+      45,    47,    49,    50,    52,    53,    55,    56,    58,    60,
+      61,    63,    65,    67,    68,    70,    72,    73,    75,    76,
+      78,    79,    81,    82,    83,    84,    85,    86,    87,    89,
+      91,    92,    93,    94,    95,    96,    98,   100,   101,   102,
+     104,   105,   107,   108,   110,   112,   113,   115,   116,   118,
+     119,   120,   122,   123
 };
 #endif
 
@@ -1560,38 +1560,38 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 123 "syntactic_analyser.y" /* yacc.c:1906  */
+#line 126 "syntactic_analyser.y" /* yacc.c:1906  */
 
 
 
 int main(int argc, char const *argv[]) {
     create_hash();
   int ntoken, vtoken;
-  FILE *fp = fopen("tokens.txt", "w+");
+//   FILE *fp = fopen("tokens.txt", "w+");
 
-  ntoken = yylex();
-  // Função principal, futuramente substituida pelo analisador sintático
-  while(ntoken){
-    // Tratar os erros aqui!
-    //tratando tamanho dos identificadores
-    if((ntoken == 37) && (strlen(yytext) > 32)){
-        printf("Tamanho do identificador incompativel: %s\n", yytext);
-        fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
-    }
-    else if(ntoken == -1){
-        printf("%s - ERRO\n", yytext);
-        fprintf(fp, "%s - ERRO\n", yytext);
-    }
-    else{
-        // printf("Linha %d: ", nlines);
-        // printf("\ntipo do token: %d ", ntoken);
-        // printf("\ntoken: %s\n", yytext);
-        // fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
-    }
+//   ntoken = yylex();
+//   // Função principal, futuramente substituida pelo analisador sintático
+//   while(ntoken){
+//     // Tratar os erros aqui!
+//     //tratando tamanho dos identificadores
+//     if((ntoken == 37) && (strlen(yytext) > 32)){
+//         printf("Tamanho do identificador incompativel: %s\n", yytext);
+//         fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
+//     }
+//     else if(ntoken == -1){
+//         printf("%s - ERRO\n", yytext);
+//         fprintf(fp, "%s - ERRO\n", yytext);
+//     }
+//     else{
+//         // printf("Linha %d: ", nlines);
+//         // printf("\ntipo do token: %d ", ntoken);
+//         // printf("\ntoken: %s\n", yytext);
+//         // fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
+//     }
 
-    ntoken = yylex();
-  }
+//     ntoken = yylex();
+//   }
 
-  fclose(fp);
-  return 0;
+//   fclose(fp);
+  return yyparse();
 }
