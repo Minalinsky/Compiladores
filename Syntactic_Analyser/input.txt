@@ -1,4 +1,4 @@
-program p;
+programa p;
 var x: integer;
 begin
 	x:=1;

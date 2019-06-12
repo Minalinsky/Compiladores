@@ -1001,7 +1001,7 @@ YY_RULE_SETUP
 case 11:
 YY_RULE_SETUP
 #line 237 "syntactic_analyser.l"
-{printf("entrada invalida: %s\n", yytext); return -1;}
+{yyerror("entrada invalida\n"); return -1;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
@@ -2015,9 +2015,9 @@ void yyfree (void * ptr )
 
 #line 238 "syntactic_analyser.l"
 
-
+/*
 int yywrap(void)
 {
   	return 1;
 }
-
+*/

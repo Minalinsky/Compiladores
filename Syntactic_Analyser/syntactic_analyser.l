@@ -234,10 +234,11 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 
 "\n" {nlines++;}
 
-. {printf("entrada invalida: %s\n", yytext); return -1;}
+. {yyerror("entrada invalida\n"); return -1;}
 %%
-
+/*
 int yywrap(void)
 {
   	return 1;
 }
+*/

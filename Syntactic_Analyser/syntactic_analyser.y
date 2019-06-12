@@ -22,7 +22,8 @@ SIMBOLO_THEN SIMBOLO_DO SIMBOLO_FOR SIMBOLO_TO
 SIMBOLO_CONST SIMBOLO_VAR SIMBOLO_REAL SIMBOLO_INTEGER SIMBOLO_PROCEDURE SIMBOLO_ELSE SIMBOLO_READ SIMBOLO_WRITE SIMBOLO_WHILE SIMBOLO_IF 
 SIMBOLO_THEN SIMBOLO_DO SIMBOLO_FOR SIMBOLO_TO
 
-%left ':' '=' ';' ',' '*' '/' '+' '-' '(' ')' '<' '>' '.'
+//%left ':' '=' ';' ',' '*' '/' '+' '-' '(' ')' '<' '>' '.'
+%left '-' '+' '*' '/'
 
 // Aqui o identificador de começo
 %start programa
@@ -30,6 +31,7 @@ SIMBOLO_THEN SIMBOLO_DO SIMBOLO_FOR SIMBOLO_TO
 %%
 
 programa: SIMBOLO_PROGRAM IDENT ';' corpo 
+    | error corpo
     ;
 corpo: dc SIMBOLO_BEGIN comandos SIMBOLO_END
     ;
@@ -139,7 +141,7 @@ int main(int argc, char const *argv[]) {
 
 //   ntoken = yylex();
 //   // Função principal, futuramente substituida pelo analisador sintático
-//   while(ntoken){
+    /*while(ntoken){
 //     // Tratar os erros aqui!
 //     //tratando tamanho dos identificadores
 //     if((ntoken == 37) && (strlen(yytext) > 32)){
@@ -157,11 +159,14 @@ int main(int argc, char const *argv[]) {
 //         // fprintf(fp, "%s - %s\n", yytext, tokenType(ntoken));
 //     }
 
-//     ntoken = yylex();
-//   }
+        ntoken = yylex();
+    }*/
 
 //   fclose(fp);
   
   return yyparse(); //Inicializando o analisador sintático
 
 }
+
+yywrap(){}
+
