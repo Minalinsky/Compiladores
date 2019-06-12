@@ -222,25 +222,7 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 
 [_@#$%&]+[a-zA-Z0-9]* {printf("Identificador mal formatado: %s\n", yytext); return -1;}
 ["{"][ \ta-zA-Z_]* {printf("Comentário não fechado: %s\n", yytext); return -1;}
-/*
-":=" {return ATRIBUICAO;}
-"=" {return IGUAL;}
-";" {return PONTO_VIRGULA;}
-"," {return SIMBOLO_VIRGULA;}
-":" {return DOIS_PONTOS;}
-"*" {return MULT;}
-"/" {return DIV;}
-"+" {return SOMA;}
-"-" {return SUB;}
-"(" {return SIMBOLO_APAR;}
-")" {return SIMBOLO_FPAR;}
-"<>" {return DIFERENTE;}
-">=" {return MAIOR_IGUAL;}
-"<=" {return MENOR_IGUAL;}
-">" {return MAIOR;}
-"<" {return MENOR;}
-"." {return PONTO;}
-*/
+
 {IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
 			if(strcmp(reserved.word, "@null") != 0){
 				return reserved.return_message;
