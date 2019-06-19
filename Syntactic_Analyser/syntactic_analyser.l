@@ -1,10 +1,16 @@
 %{
+	void yyerror(char *s); //eliminando warning
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "y.tab.h"
 
-#define SIZE 25	//HASH por definição deve ter um espaço maior que o número de entrada
+#define SIZE 89	//HASH com um espaço maior que o número de entrada, evitando colisões
 #define RESERVERD_WORDS 17
+
+#define TRUE 1
+#define FALSE 0
 
 int nlines=1, ntoken;
 
@@ -16,15 +22,26 @@ struct reserved_word{	// 'objeto' que será inserido na hash
 
 struct reserved_word reserveds_words[SIZE];	//Hash fixa e estática
 
+// Variáveis auxiliares para controle dos slots vazios da hash
+int positions_occuppieds[RESERVERD_WORDS];
+int positions_counter = 0;
+
 // Função de inserção na hash
 void insert_word_aux(char * word, char * return_message, int return_value){
 	int length = strlen(word);
 	int asc_value = 0;
 
-	for(int i = 0; i < length; i++) //função de espalhamento
+	for(int i = 0; i < length; i++){
 		asc_value += (int)word[i];
+		//asc_value %=  size;
+	}
+
+	//asc_value = (int)asc_value/length;
 
 	int position = asc_value % SIZE;
+	//printf("Inserindo %s na posição: %d, asc = %d\n", word, position, asc_value);
+	positions_occuppieds[positions_counter] = position;
+	positions_counter++;
 
 	reserveds_words[position].word = word; 	// dados inseridos
 	reserveds_words[position].return_message = return_message;
@@ -37,17 +54,20 @@ struct reserved_word find_reserved_words(char *word){
 	if(length <= 9){
 		int asc_value = 0;
 
-		for(int i = 0; i < length; i++)
+		for(int i = 0; i < length; i++){
 			asc_value += (int)word[i];
+			//asc_value /=  length ;
+		}
 
 		int position = asc_value % SIZE;
+		//printf("Buscando %s na posição %d\n\n", word, position);
 
 		if(strcmp(reserveds_words[position].word, word) == 0)
 			return reserveds_words[position];
 	}
 
 	struct reserved_word nulo;
-	nulo.word = "nulo";
+	nulo.word = "@null";
 
 	return nulo;
 }
@@ -154,9 +174,9 @@ void insert_word(int i){
 		return_message = "SIMBOLO_FOR";
 	}
 	else if(i == 16){
-		word = (char*)malloc(sizeof(char) * 3);
+		word = (char*)malloc(sizeof(char) * 2);
 		word = "to";
-		return_message = (char*)malloc(sizeof(char) * 11);
+		return_message = (char*)malloc(sizeof(char) * 10);
 		return_message = "SIMBOLO_TO";
 	}
 
@@ -164,8 +184,22 @@ void insert_word(int i){
 }
 
 void create_hash(){
+	// Insere as palavras reservadas
 	for(int i = 0; i < RESERVERD_WORDS; i++)
 		insert_word(i);
+
+	// Indica as posições vazias da hash como inválidas
+	for(int i = 0; i < SIZE; i++){
+		int isOcuppied = FALSE;
+		for(int j = 0; j < RESERVERD_WORDS; j++){
+			if(i == positions_occuppieds[j]){
+				isOcuppied = TRUE;
+				break;
+			}
+		}
+		if(isOcuppied == FALSE)
+			reserveds_words[i].word = "@null";
+	}
 }
 
 %}
@@ -181,47 +215,30 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 {COMENTARIO}  ;
 
 
-{NUMERO_INT}+ {printf("<'%d', NUMERO_INT>\n", atoi(yytext)); return 1;}
-{NUMERO_REAL} {printf("<'%f', NUMERO_REAL>\n", atof(yytext)); return 2;}
 
-{NUMERO_INT}[_@#$%&a-zA-Z]+{DIGITO}*  {printf("Numero mal formatado: %s\n", yytext); return -1;}
-{NUMERO_INT}"."{DIGITO}*[_@#$%&a-zA-Z]+{DIGITO}* {printf("Numero mal formatado: %s\n", yytext); return -1;}
+{NUMERO_INT}+ {return NUMERO_INT;}
+{NUMERO_REAL} {return NUMERO_REAL;}
 
-[_@#$%&]+[a-zA-Z0-9]* {printf("Identificador mal formatado: %s\n", yytext); return -1;}
-["{"][ \ta-zA-Z_]* {printf("Comentário não fechado: %s\n", yytext); return -1;}
+{NUMERO_INT}[_@#$%&a-zA-Z]+{DIGITO}*  {ECHO; yyerror("Numero mal formatado\n"); return -1;}
+{NUMERO_INT}"."{DIGITO}*[_@#$%&a-zA-Z]+{DIGITO}* {ECHO; yyerror("Numero mal formatado\n"); return -1;}
 
-":=" {printf("<%s, ATRIBUICAO>\n", yytext); return 37;}
-"=" {printf("<%s, IGUAL>\n", yytext); return 20;}
-";" {printf("<%s, PONTO_VIRGULA>\n", yytext); return 21;}
-"," {printf("<%s, SIMBOLO_VIRGULA>\n", yytext); return 22;}
-":" {printf("<%s, DOIS_PONTOS>\n", yytext); return 23;}
-"*" {printf("<%s, MULT>\n", yytext); return 24;}
-"/" {printf("<%s, DIV>\n", yytext); return 25;}
-"+" {printf("<%s, SOMA>\n", yytext); return 26;}
-"-" {printf("<%s, SUB>\n", yytext); return 27;}
-"(" {printf("<%s, SIMBOLO_APAR>\n", yytext); return 28;}
-")" {printf("<%s, SIMBOLO_FPAR>\n", yytext); return 29;}
-"<>" {printf("<%s, DIFERENTE>\n", yytext); return 30;}
-">=" {printf("<%s, MAIOR_IGUAL>\n", yytext); return 31;}
-"<=" {printf("<%s, MENOR_IGUAL>\n", yytext); return 32;}
-">" {printf("<%s, MAIOR>\n", yytext); return 33;}
-"<" {printf("<%s, MENOR>\n", yytext); return 34;}
-"." {printf("<%s, PONTO>\n", yytext); return 35;}
+[_@#$%&]+[a-zA-Z0-9]* {ECHO; yyerror("Identificador mal formatado\n"); return -1;}
+["{"][ \ta-zA-Z_]* {ECHO; yyerror("Comentário não fechado\n"); return -1;}
 
 {IDENT} {struct reserved_word reserved = find_reserved_words(yytext);
-			if(strcmp(reserved.word, "nulo") != 0){
-				printf("<%s, %s>\n", yytext, reserved.return_message);
-				return reserved.return_value;
+			if(strcmp(reserved.word, "@null") != 0){
+				return reserved.return_message;
 			}
-			printf("<%s, IDENT>\n", yytext); return 36;
+			return IDENT;
 		}
 
 "\n" {nlines++;}
 
-. {printf("entrada invalida: %s\n", yytext); return -1;}
+. {yyerror("entrada invalida\n"); return -1;}
 %%
-
+/*
 int yywrap(void)
 {
   	return 1;
 }
+*/

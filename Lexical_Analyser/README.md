@@ -38,10 +38,10 @@ Relatório.
     - Isso será tratado no analisador sintático;
 
   - Número: verifica se existe [(underscore)@#$%&a-zA-Z] em alguma parte depois de um número:
-    - Caso seja um número no formto 12a ou 1a2 será retornado:
+    - Caso seja um número no formato 12a ou 1a2:
       - Será retornado um número mal formado (12a ou 1a2)
-    - Caso seja um número no formto 12a.344 será retornado:
-      - um número mal formatado (12a) um ponto (.) e um número inteiro (344)
+    - Caso seja um número no formato 12a.344:
+      - Será retornado um número mal formatado (12a) um ponto (.) e um número inteiro (344)
       - isso será tratado no analisador sintático.
     - Caso seja um número no formato 12a.a344 será retornado:
       - um número mal formatado (12a) um ponto (.) e um identificador (a344)

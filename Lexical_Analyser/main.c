@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -7,6 +8,8 @@ extern void create_hash();
 extern char* yytext;
 extern int nlines;
 
+// Essa função só é utilizada para manter toda a escrita do arquivo tokens.txt em
+// um único lugar
 char* tokenType(int ntoken){ //nao podemos alterar os returns do regex.l devido ao laço while na main()
     switch(ntoken){
         case 1: return "NUMERO_INT";
@@ -28,24 +31,24 @@ char* tokenType(int ntoken){ //nao podemos alterar os returns do regex.l devido 
         case 17: return "SIMBOLO_DO";
         case 18: return "SIMBOLO_FOR";
         case 19: return "SIMBOLO_TO";
-        case 20: return "IGUAL";
-        case 21: return "PONTO_VIRGULA";
-        case 22: return "SIMBOLO_VIRGULA";
-        case 23: return "DOIS_PONTOS";
-        case 24: return "MULT";
-        case 25: return "DIV";
-        case 26: return "SOMA";
-        case 27: return "SUB";
-        case 28: return "SIMBOLO_APAR";
-        case 29: return "SIMBOLO_FPAR";
-        case 30: return "DIFERENTE";
-        case 31: return "MAIOR_IGUAL";
-        case 32: return "MENOR_IGUAL";
-        case 33: return "MAIOR";
-        case 34: return "MENOR";
-        case 35: return "PONTO";
-        case 36: return "IDENT";
-        case 37: return "ATRIBUICAO";
+        case 20: return "ATRIBUICAO";
+        case 21: return "IGUAL";
+        case 22: return "PONTO_VIRGULA";
+        case 23: return "SIMBOLO_VIRGULA";
+        case 24: return "DOIS_PONTOS";
+        case 25: return "MULT";
+        case 26: return "DIV";
+        case 27: return "SOMA";
+        case 28: return "SUB";
+        case 29: return "SIMBOLO_APAR";
+        case 30: return "SIMBOLO_FPAR";
+        case 31: return "DIFERENTE";
+        case 32: return "MAIOR_IGUAL";
+        case 33: return "MENOR_IGUAL";
+        case 34: return "MAIOR";
+        case 35: return "MENOR";
+        case 36: return "PONTO";
+        case 37: return "IDENT";
         default: return "";
     }
     return "";
@@ -61,7 +64,7 @@ int main(int argc, char const *argv[]) {
   while(ntoken){
     // Tratar os erros aqui!
     //tratando tamanho dos identificadores
-    if((ntoken == 36) && (strlen(yytext) > 32)){
+    if((ntoken == 37) && (strlen(yytext) > 32)){
         printf("Tamanho do identificador incompativel: %s\n", yytext);
         fprintf(fp, "%s - ERRO_TAMANHO_ID\n", yytext);
     }

@@ -1,0 +1,1354 @@
+Terminais sem uso na gramática
+
+   DIGITO
+   COMENTARIO
+   SIMBOLO_REAL
+   SIMBOLO_INTEGER
+   SIMBOLO_FOR
+   SIMBOLO_TO
+
+
+Estado 87 conflitos: 1 de deslocamento/redução
+
+
+Gramática
+
+    0 $accept: programa $end
+
+    1 programa: SIMBOLO_PROGRAM IDENT ';' corpo
+    2         | error corpo
+
+    3 corpo: dc SIMBOLO_BEGIN comandos SIMBOLO_END
+
+    4 dc: dc_c dc_v dc_p
+
+    5 dc_c: SIMBOLO_CONST IDENT '=' numero ';' dc_c
+    6     | %empty
+
+    7 dc_v: SIMBOLO_VAR variaveis ':' tipo_var ';' dc_v
+    8     | %empty
+
+    9 tipo_var: NUMERO_REAL
+   10         | NUMERO_INT
+
+   11 variaveis: IDENT mais_var
+
+   12 mais_var: ',' variaveis
+   13         | %empty
+
+   14 dc_p: SIMBOLO_PROCEDURE IDENT parametros ';' corpo_p dc_p
+   15     | %empty
+
+   16 parametros: '(' lista_par ')'
+   17           | %empty
+
+   18 lista_par: variaveis ':' tipo_var mais_par
+
+   19 mais_par: ';' lista_par
+   20         | %empty
+
+   21 corpo_p: dc_loc SIMBOLO_BEGIN comandos SIMBOLO_END ';'
+
+   22 dc_loc: dc_v
+
+   23 lista_arg: '(' argumentos ')'
+   24          | %empty
+
+   25 argumentos: IDENT mais_ident
+
+   26 mais_ident: ';' argumentos
+   27           | %empty
+
+   28 pfalsa: SIMBOLO_ELSE cmd
+   29       | %empty
+
+   30 comandos: cmd ';' comandos
+   31         | %empty
+
+   32 cmd: SIMBOLO_READ '(' variaveis ')'
+   33    | SIMBOLO_WRITE '(' variaveis ')'
+   34    | SIMBOLO_WHILE '(' condicao ')' SIMBOLO_DO cmd
+   35    | SIMBOLO_IF condicao SIMBOLO_THEN cmd pfalsa
+   36    | IDENT ':' '=' expressao
+   37    | IDENT lista_arg
+   38    | SIMBOLO_BEGIN comandos SIMBOLO_END
+
+   39 condicao: expressao relacao expressao
+
+   40 relacao: '='
+   41        | '<' '>'
+   42        | '>' '='
+   43        | '<' '='
+   44        | '>'
+   45        | '<'
+
+   46 expressao: termo outros_termos
+
+   47 op_un: '+'
+   48      | '-'
+   49      | %empty
+
+   50 outros_termos: op_ad termo outros_termos
+   51              | %empty
+
+   52 op_ad: '+'
+   53      | '-'
+
+   54 termo: op_un fator mais_fatores
+
+   55 mais_fatores: op_mul fator mais_fatores
+   56             | %empty
+
+   57 op_mul: '*'
+   58       | '/'
+
+   59 fator: IDENT
+   60      | numero
+   61      | '(' expressao ')'
+
+   62 numero: NUMERO_INT
+   63       | NUMERO_REAL
+
+
+Terminais, com as regras onde eles aparecem
+
+$end (0) 0
+'(' (40) 16 23 32 33 34 61
+')' (41) 16 23 32 33 34 61
+'*' (42) 57
+'+' (43) 47 52
+',' (44) 12
+'-' (45) 48 53
+'/' (47) 58
+':' (58) 7 18 36
+';' (59) 1 5 7 14 19 21 26 30
+'<' (60) 41 43 45
+'=' (61) 5 36 40 42 43
+'>' (62) 41 42 44
+error (256) 2
+DIGITO (258)
+NUMERO_INT (259) 10 62
+NUMERO_REAL (260) 9 63
+IDENT (261) 1 5 11 14 25 36 37 59
+COMENTARIO (262)
+SIMBOLO_PROGRAM (263) 1
+SIMBOLO_BEGIN (264) 3 21 38
+SIMBOLO_END (265) 3 21 38
+SIMBOLO_CONST (266) 5
+SIMBOLO_VAR (267) 7
+SIMBOLO_REAL (268)
+SIMBOLO_INTEGER (269)
+SIMBOLO_PROCEDURE (270) 14
+SIMBOLO_ELSE (271) 28
+SIMBOLO_READ (272) 32
+SIMBOLO_WRITE (273) 33
+SIMBOLO_WHILE (274) 34
+SIMBOLO_IF (275) 35
+SIMBOLO_THEN (276) 35
+SIMBOLO_DO (277) 34
+SIMBOLO_FOR (278)
+SIMBOLO_TO (279)
+
+
+Não terminais com as regras onde eles aparecem
+
+$accept (37)
+    à esquerda: 0
+programa (38)
+    à esquerda: 1 2, à direita: 0
+corpo (39)
+    à esquerda: 3, à direita: 1 2
+dc (40)
+    à esquerda: 4, à direita: 3
+dc_c (41)
+    à esquerda: 5 6, à direita: 4 5
+dc_v (42)
+    à esquerda: 7 8, à direita: 4 7 22
+tipo_var (43)
+    à esquerda: 9 10, à direita: 7 18
+variaveis (44)
+    à esquerda: 11, à direita: 7 12 18 32 33
+mais_var (45)
+    à esquerda: 12 13, à direita: 11
+dc_p (46)
+    à esquerda: 14 15, à direita: 4 14
+parametros (47)
+    à esquerda: 16 17, à direita: 14
+lista_par (48)
+    à esquerda: 18, à direita: 16 19
+mais_par (49)
+    à esquerda: 19 20, à direita: 18
+corpo_p (50)
+    à esquerda: 21, à direita: 14
+dc_loc (51)
+    à esquerda: 22, à direita: 21
+lista_arg (52)
+    à esquerda: 23 24, à direita: 37
+argumentos (53)
+    à esquerda: 25, à direita: 23 26
+mais_ident (54)
+    à esquerda: 26 27, à direita: 25
+pfalsa (55)
+    à esquerda: 28 29, à direita: 35
+comandos (56)
+    à esquerda: 30 31, à direita: 3 21 30 38
+cmd (57)
+    à esquerda: 32 33 34 35 36 37 38, à direita: 28 30 34 35
+condicao (58)
+    à esquerda: 39, à direita: 34 35
+relacao (59)
+    à esquerda: 40 41 42 43 44 45, à direita: 39
+expressao (60)
+    à esquerda: 46, à direita: 36 39 61
+op_un (61)
+    à esquerda: 47 48 49, à direita: 54
+outros_termos (62)
+    à esquerda: 50 51, à direita: 46 50
+op_ad (63)
+    à esquerda: 52 53, à direita: 50
+termo (64)
+    à esquerda: 54, à direita: 46 50
+mais_fatores (65)
+    à esquerda: 55 56, à direita: 54 55
+op_mul (66)
+    à esquerda: 57 58, à direita: 55
+fator (67)
+    à esquerda: 59 60 61, à direita: 54 55
+numero (68)
+    à esquerda: 62 63, à direita: 5 60
+
+
+Estado 0
+
+    0 $accept: . programa $end
+
+    error            deslocar, e ir ao estado 1
+    SIMBOLO_PROGRAM  deslocar, e ir ao estado 2
+
+    programa  ir ao estado 3
+
+
+Estado 1
+
+    2 programa: error . corpo
+
+    SIMBOLO_CONST  deslocar, e ir ao estado 4
+
+    $padrão  reduzir usando a regra 6 (dc_c)
+
+    corpo  ir ao estado 5
+    dc     ir ao estado 6
+    dc_c   ir ao estado 7
+
+
+Estado 2
+
+    1 programa: SIMBOLO_PROGRAM . IDENT ';' corpo
+
+    IDENT  deslocar, e ir ao estado 8
+
+
+Estado 3
+
+    0 $accept: programa . $end
+
+    $end  deslocar, e ir ao estado 9
+
+
+Estado 4
+
+    5 dc_c: SIMBOLO_CONST . IDENT '=' numero ';' dc_c
+
+    IDENT  deslocar, e ir ao estado 10
+
+
+Estado 5
+
+    2 programa: error corpo .
+
+    $padrão  reduzir usando a regra 2 (programa)
+
+
+Estado 6
+
+    3 corpo: dc . SIMBOLO_BEGIN comandos SIMBOLO_END
+
+    SIMBOLO_BEGIN  deslocar, e ir ao estado 11
+
+
+Estado 7
+
+    4 dc: dc_c . dc_v dc_p
+
+    SIMBOLO_VAR  deslocar, e ir ao estado 12
+
+    $padrão  reduzir usando a regra 8 (dc_v)
+
+    dc_v  ir ao estado 13
+
+
+Estado 8
+
+    1 programa: SIMBOLO_PROGRAM IDENT . ';' corpo
+
+    ';'  deslocar, e ir ao estado 14
+
+
+Estado 9
+
+    0 $accept: programa $end .
+
+    $padrão  aceitar
+
+
+Estado 10
+
+    5 dc_c: SIMBOLO_CONST IDENT . '=' numero ';' dc_c
+
+    '='  deslocar, e ir ao estado 15
+
+
+Estado 11
+
+    3 corpo: dc SIMBOLO_BEGIN . comandos SIMBOLO_END
+
+    IDENT          deslocar, e ir ao estado 16
+    SIMBOLO_BEGIN  deslocar, e ir ao estado 17
+    SIMBOLO_READ   deslocar, e ir ao estado 18
+    SIMBOLO_WRITE  deslocar, e ir ao estado 19
+    SIMBOLO_WHILE  deslocar, e ir ao estado 20
+    SIMBOLO_IF     deslocar, e ir ao estado 21
+
+    $padrão  reduzir usando a regra 31 (comandos)
+
+    comandos  ir ao estado 22
+    cmd       ir ao estado 23
+
+
+Estado 12
+
+    7 dc_v: SIMBOLO_VAR . variaveis ':' tipo_var ';' dc_v
+
+    IDENT  deslocar, e ir ao estado 24
+
+    variaveis  ir ao estado 25
+
+
+Estado 13
+
+    4 dc: dc_c dc_v . dc_p
+
+    SIMBOLO_PROCEDURE  deslocar, e ir ao estado 26
+
+    $padrão  reduzir usando a regra 15 (dc_p)
+
+    dc_p  ir ao estado 27
+
+
+Estado 14
+
+    1 programa: SIMBOLO_PROGRAM IDENT ';' . corpo
+
+    SIMBOLO_CONST  deslocar, e ir ao estado 4
+
+    $padrão  reduzir usando a regra 6 (dc_c)
+
+    corpo  ir ao estado 28
+    dc     ir ao estado 6
+    dc_c   ir ao estado 7
+
+
+Estado 15
+
+    5 dc_c: SIMBOLO_CONST IDENT '=' . numero ';' dc_c
+
+    NUMERO_INT   deslocar, e ir ao estado 29
+    NUMERO_REAL  deslocar, e ir ao estado 30
+
+    numero  ir ao estado 31
+
+
+Estado 16
+
+   36 cmd: IDENT . ':' '=' expressao
+   37    | IDENT . lista_arg
+
+    ':'  deslocar, e ir ao estado 32
+    '('  deslocar, e ir ao estado 33
+
+    $padrão  reduzir usando a regra 24 (lista_arg)
+
+    lista_arg  ir ao estado 34
+
+
+Estado 17
+
+   38 cmd: SIMBOLO_BEGIN . comandos SIMBOLO_END
+
+    IDENT          deslocar, e ir ao estado 16
+    SIMBOLO_BEGIN  deslocar, e ir ao estado 17
+    SIMBOLO_READ   deslocar, e ir ao estado 18
+    SIMBOLO_WRITE  deslocar, e ir ao estado 19
+    SIMBOLO_WHILE  deslocar, e ir ao estado 20
+    SIMBOLO_IF     deslocar, e ir ao estado 21
+
+    $padrão  reduzir usando a regra 31 (comandos)
+
+    comandos  ir ao estado 35
+    cmd       ir ao estado 23
+
+
+Estado 18
+
+   32 cmd: SIMBOLO_READ . '(' variaveis ')'
+
+    '('  deslocar, e ir ao estado 36
+
+
+Estado 19
+
+   33 cmd: SIMBOLO_WRITE . '(' variaveis ')'
+
+    '('  deslocar, e ir ao estado 37
+
+
+Estado 20
+
+   34 cmd: SIMBOLO_WHILE . '(' condicao ')' SIMBOLO_DO cmd
+
+    '('  deslocar, e ir ao estado 38
+
+
+Estado 21
+
+   35 cmd: SIMBOLO_IF . condicao SIMBOLO_THEN cmd pfalsa
+
+    '-'  deslocar, e ir ao estado 39
+    '+'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 49 (op_un)
+
+    condicao   ir ao estado 41
+    expressao  ir ao estado 42
+    op_un      ir ao estado 43
+    termo      ir ao estado 44
+
+
+Estado 22
+
+    3 corpo: dc SIMBOLO_BEGIN comandos . SIMBOLO_END
+
+    SIMBOLO_END  deslocar, e ir ao estado 45
+
+
+Estado 23
+
+   30 comandos: cmd . ';' comandos
+
+    ';'  deslocar, e ir ao estado 46
+
+
+Estado 24
+
+   11 variaveis: IDENT . mais_var
+
+    ','  deslocar, e ir ao estado 47
+
+    $padrão  reduzir usando a regra 13 (mais_var)
+
+    mais_var  ir ao estado 48
+
+
+Estado 25
+
+    7 dc_v: SIMBOLO_VAR variaveis . ':' tipo_var ';' dc_v
+
+    ':'  deslocar, e ir ao estado 49
+
+
+Estado 26
+
+   14 dc_p: SIMBOLO_PROCEDURE . IDENT parametros ';' corpo_p dc_p
+
+    IDENT  deslocar, e ir ao estado 50
+
+
+Estado 27
+
+    4 dc: dc_c dc_v dc_p .
+
+    $padrão  reduzir usando a regra 4 (dc)
+
+
+Estado 28
+
+    1 programa: SIMBOLO_PROGRAM IDENT ';' corpo .
+
+    $padrão  reduzir usando a regra 1 (programa)
+
+
+Estado 29
+
+   62 numero: NUMERO_INT .
+
+    $padrão  reduzir usando a regra 62 (numero)
+
+
+Estado 30
+
+   63 numero: NUMERO_REAL .
+
+    $padrão  reduzir usando a regra 63 (numero)
+
+
+Estado 31
+
+    5 dc_c: SIMBOLO_CONST IDENT '=' numero . ';' dc_c
+
+    ';'  deslocar, e ir ao estado 51
+
+
+Estado 32
+
+   36 cmd: IDENT ':' . '=' expressao
+
+    '='  deslocar, e ir ao estado 52
+
+
+Estado 33
+
+   23 lista_arg: '(' . argumentos ')'
+
+    IDENT  deslocar, e ir ao estado 53
+
+    argumentos  ir ao estado 54
+
+
+Estado 34
+
+   37 cmd: IDENT lista_arg .
+
+    $padrão  reduzir usando a regra 37 (cmd)
+
+
+Estado 35
+
+   38 cmd: SIMBOLO_BEGIN comandos . SIMBOLO_END
+
+    SIMBOLO_END  deslocar, e ir ao estado 55
+
+
+Estado 36
+
+   32 cmd: SIMBOLO_READ '(' . variaveis ')'
+
+    IDENT  deslocar, e ir ao estado 24
+
+    variaveis  ir ao estado 56
+
+
+Estado 37
+
+   33 cmd: SIMBOLO_WRITE '(' . variaveis ')'
+
+    IDENT  deslocar, e ir ao estado 24
+
+    variaveis  ir ao estado 57
+
+
+Estado 38
+
+   34 cmd: SIMBOLO_WHILE '(' . condicao ')' SIMBOLO_DO cmd
+
+    '-'  deslocar, e ir ao estado 39
+    '+'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 49 (op_un)
+
+    condicao   ir ao estado 58
+    expressao  ir ao estado 42
+    op_un      ir ao estado 43
+    termo      ir ao estado 44
+
+
+Estado 39
+
+   48 op_un: '-' .
+
+    $padrão  reduzir usando a regra 48 (op_un)
+
+
+Estado 40
+
+   47 op_un: '+' .
+
+    $padrão  reduzir usando a regra 47 (op_un)
+
+
+Estado 41
+
+   35 cmd: SIMBOLO_IF condicao . SIMBOLO_THEN cmd pfalsa
+
+    SIMBOLO_THEN  deslocar, e ir ao estado 59
+
+
+Estado 42
+
+   39 condicao: expressao . relacao expressao
+
+    '='  deslocar, e ir ao estado 60
+    '<'  deslocar, e ir ao estado 61
+    '>'  deslocar, e ir ao estado 62
+
+    relacao  ir ao estado 63
+
+
+Estado 43
+
+   54 termo: op_un . fator mais_fatores
+
+    NUMERO_INT   deslocar, e ir ao estado 29
+    NUMERO_REAL  deslocar, e ir ao estado 30
+    IDENT        deslocar, e ir ao estado 64
+    '('          deslocar, e ir ao estado 65
+
+    fator   ir ao estado 66
+    numero  ir ao estado 67
+
+
+Estado 44
+
+   46 expressao: termo . outros_termos
+
+    '-'  deslocar, e ir ao estado 68
+    '+'  deslocar, e ir ao estado 69
+
+    $padrão  reduzir usando a regra 51 (outros_termos)
+
+    outros_termos  ir ao estado 70
+    op_ad          ir ao estado 71
+
+
+Estado 45
+
+    3 corpo: dc SIMBOLO_BEGIN comandos SIMBOLO_END .
+
+    $padrão  reduzir usando a regra 3 (corpo)
+
+
+Estado 46
+
+   30 comandos: cmd ';' . comandos
+
+    IDENT          deslocar, e ir ao estado 16
+    SIMBOLO_BEGIN  deslocar, e ir ao estado 17
+    SIMBOLO_READ   deslocar, e ir ao estado 18
+    SIMBOLO_WRITE  deslocar, e ir ao estado 19
+    SIMBOLO_WHILE  deslocar, e ir ao estado 20
+    SIMBOLO_IF     deslocar, e ir ao estado 21
+
+    $padrão  reduzir usando a regra 31 (comandos)
+
+    comandos  ir ao estado 72
+    cmd       ir ao estado 23
+
+
+Estado 47
+
+   12 mais_var: ',' . variaveis
+
+    IDENT  deslocar, e ir ao estado 24
+
+    variaveis  ir ao estado 73
+
+
+Estado 48
+
+   11 variaveis: IDENT mais_var .
+
+    $padrão  reduzir usando a regra 11 (variaveis)
+
+
+Estado 49
+
+    7 dc_v: SIMBOLO_VAR variaveis ':' . tipo_var ';' dc_v
+
+    NUMERO_INT   deslocar, e ir ao estado 74
+    NUMERO_REAL  deslocar, e ir ao estado 75
+
+    tipo_var  ir ao estado 76
+
+
+Estado 50
+
+   14 dc_p: SIMBOLO_PROCEDURE IDENT . parametros ';' corpo_p dc_p
+
+    '('  deslocar, e ir ao estado 77
+
+    $padrão  reduzir usando a regra 17 (parametros)
+
+    parametros  ir ao estado 78
+
+
+Estado 51
+
+    5 dc_c: SIMBOLO_CONST IDENT '=' numero ';' . dc_c
+
+    SIMBOLO_CONST  deslocar, e ir ao estado 4
+
+    $padrão  reduzir usando a regra 6 (dc_c)
+
+    dc_c  ir ao estado 79
+
+
+Estado 52
+
+   36 cmd: IDENT ':' '=' . expressao
+
+    '-'  deslocar, e ir ao estado 39
+    '+'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 49 (op_un)
+
+    expressao  ir ao estado 80
+    op_un      ir ao estado 43
+    termo      ir ao estado 44
+
+
+Estado 53
+
+   25 argumentos: IDENT . mais_ident
+
+    ';'  deslocar, e ir ao estado 81
+
+    $padrão  reduzir usando a regra 27 (mais_ident)
+
+    mais_ident  ir ao estado 82
+
+
+Estado 54
+
+   23 lista_arg: '(' argumentos . ')'
+
+    ')'  deslocar, e ir ao estado 83
+
+
+Estado 55
+
+   38 cmd: SIMBOLO_BEGIN comandos SIMBOLO_END .
+
+    $padrão  reduzir usando a regra 38 (cmd)
+
+
+Estado 56
+
+   32 cmd: SIMBOLO_READ '(' variaveis . ')'
+
+    ')'  deslocar, e ir ao estado 84
+
+
+Estado 57
+
+   33 cmd: SIMBOLO_WRITE '(' variaveis . ')'
+
+    ')'  deslocar, e ir ao estado 85
+
+
+Estado 58
+
+   34 cmd: SIMBOLO_WHILE '(' condicao . ')' SIMBOLO_DO cmd
+
+    ')'  deslocar, e ir ao estado 86
+
+
+Estado 59
+
+   35 cmd: SIMBOLO_IF condicao SIMBOLO_THEN . cmd pfalsa
+
+    IDENT          deslocar, e ir ao estado 16
+    SIMBOLO_BEGIN  deslocar, e ir ao estado 17
+    SIMBOLO_READ   deslocar, e ir ao estado 18
+    SIMBOLO_WRITE  deslocar, e ir ao estado 19
+    SIMBOLO_WHILE  deslocar, e ir ao estado 20
+    SIMBOLO_IF     deslocar, e ir ao estado 21
+
+    cmd  ir ao estado 87
+
+
+Estado 60
+
+   40 relacao: '=' .
+
+    $padrão  reduzir usando a regra 40 (relacao)
+
+
+Estado 61
+
+   41 relacao: '<' . '>'
+   43        | '<' . '='
+   45        | '<' .
+
+    '='  deslocar, e ir ao estado 88
+    '>'  deslocar, e ir ao estado 89
+
+    $padrão  reduzir usando a regra 45 (relacao)
+
+
+Estado 62
+
+   42 relacao: '>' . '='
+   44        | '>' .
+
+    '='  deslocar, e ir ao estado 90
+
+    $padrão  reduzir usando a regra 44 (relacao)
+
+
+Estado 63
+
+   39 condicao: expressao relacao . expressao
+
+    '-'  deslocar, e ir ao estado 39
+    '+'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 49 (op_un)
+
+    expressao  ir ao estado 91
+    op_un      ir ao estado 43
+    termo      ir ao estado 44
+
+
+Estado 64
+
+   59 fator: IDENT .
+
+    $padrão  reduzir usando a regra 59 (fator)
+
+
+Estado 65
+
+   61 fator: '(' . expressao ')'
+
+    '-'  deslocar, e ir ao estado 39
+    '+'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 49 (op_un)
+
+    expressao  ir ao estado 92
+    op_un      ir ao estado 43
+    termo      ir ao estado 44
+
+
+Estado 66
+
+   54 termo: op_un fator . mais_fatores
+
+    '*'  deslocar, e ir ao estado 93
+    '/'  deslocar, e ir ao estado 94
+
+    $padrão  reduzir usando a regra 56 (mais_fatores)
+
+    mais_fatores  ir ao estado 95
+    op_mul        ir ao estado 96
+
+
+Estado 67
+
+   60 fator: numero .
+
+    $padrão  reduzir usando a regra 60 (fator)
+
+
+Estado 68
+
+   53 op_ad: '-' .
+
+    $padrão  reduzir usando a regra 53 (op_ad)
+
+
+Estado 69
+
+   52 op_ad: '+' .
+
+    $padrão  reduzir usando a regra 52 (op_ad)
+
+
+Estado 70
+
+   46 expressao: termo outros_termos .
+
+    $padrão  reduzir usando a regra 46 (expressao)
+
+
+Estado 71
+
+   50 outros_termos: op_ad . termo outros_termos
+
+    '-'  deslocar, e ir ao estado 39
+    '+'  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 49 (op_un)
+
+    op_un  ir ao estado 43
+    termo  ir ao estado 97
+
+
+Estado 72
+
+   30 comandos: cmd ';' comandos .
+
+    $padrão  reduzir usando a regra 30 (comandos)
+
+
+Estado 73
+
+   12 mais_var: ',' variaveis .
+
+    $padrão  reduzir usando a regra 12 (mais_var)
+
+
+Estado 74
+
+   10 tipo_var: NUMERO_INT .
+
+    $padrão  reduzir usando a regra 10 (tipo_var)
+
+
+Estado 75
+
+    9 tipo_var: NUMERO_REAL .
+
+    $padrão  reduzir usando a regra 9 (tipo_var)
+
+
+Estado 76
+
+    7 dc_v: SIMBOLO_VAR variaveis ':' tipo_var . ';' dc_v
+
+    ';'  deslocar, e ir ao estado 98
+
+
+Estado 77
+
+   16 parametros: '(' . lista_par ')'
+
+    IDENT  deslocar, e ir ao estado 24
+
+    variaveis  ir ao estado 99
+    lista_par  ir ao estado 100
+
+
+Estado 78
+
+   14 dc_p: SIMBOLO_PROCEDURE IDENT parametros . ';' corpo_p dc_p
+
+    ';'  deslocar, e ir ao estado 101
+
+
+Estado 79
+
+    5 dc_c: SIMBOLO_CONST IDENT '=' numero ';' dc_c .
+
+    $padrão  reduzir usando a regra 5 (dc_c)
+
+
+Estado 80
+
+   36 cmd: IDENT ':' '=' expressao .
+
+    $padrão  reduzir usando a regra 36 (cmd)
+
+
+Estado 81
+
+   26 mais_ident: ';' . argumentos
+
+    IDENT  deslocar, e ir ao estado 53
+
+    argumentos  ir ao estado 102
+
+
+Estado 82
+
+   25 argumentos: IDENT mais_ident .
+
+    $padrão  reduzir usando a regra 25 (argumentos)
+
+
+Estado 83
+
+   23 lista_arg: '(' argumentos ')' .
+
+    $padrão  reduzir usando a regra 23 (lista_arg)
+
+
+Estado 84
+
+   32 cmd: SIMBOLO_READ '(' variaveis ')' .
+
+    $padrão  reduzir usando a regra 32 (cmd)
+
+
+Estado 85
+
+   33 cmd: SIMBOLO_WRITE '(' variaveis ')' .
+
+    $padrão  reduzir usando a regra 33 (cmd)
+
+
+Estado 86
+
+   34 cmd: SIMBOLO_WHILE '(' condicao ')' . SIMBOLO_DO cmd
+
+    SIMBOLO_DO  deslocar, e ir ao estado 103
+
+
+Estado 87
+
+   35 cmd: SIMBOLO_IF condicao SIMBOLO_THEN cmd . pfalsa
+
+    SIMBOLO_ELSE  deslocar, e ir ao estado 104
+
+    SIMBOLO_ELSE  [reduzir usando a regra 29 (pfalsa)]
+    $padrão      reduzir usando a regra 29 (pfalsa)
+
+    pfalsa  ir ao estado 105
+
+
+Estado 88
+
+   43 relacao: '<' '=' .
+
+    $padrão  reduzir usando a regra 43 (relacao)
+
+
+Estado 89
+
+   41 relacao: '<' '>' .
+
+    $padrão  reduzir usando a regra 41 (relacao)
+
+
+Estado 90
+
+   42 relacao: '>' '=' .
+
+    $padrão  reduzir usando a regra 42 (relacao)
+
+
+Estado 91
+
+   39 condicao: expressao relacao expressao .
+
+    $padrão  reduzir usando a regra 39 (condicao)
+
+
+Estado 92
+
+   61 fator: '(' expressao . ')'
+
+    ')'  deslocar, e ir ao estado 106
+
+
+Estado 93
+
+   57 op_mul: '*' .
+
+    $padrão  reduzir usando a regra 57 (op_mul)
+
+
+Estado 94
+
+   58 op_mul: '/' .
+
+    $padrão  reduzir usando a regra 58 (op_mul)
+
+
+Estado 95
+
+   54 termo: op_un fator mais_fatores .
+
+    $padrão  reduzir usando a regra 54 (termo)
+
+
+Estado 96
+
+   55 mais_fatores: op_mul . fator mais_fatores
+
+    NUMERO_INT   deslocar, e ir ao estado 29
+    NUMERO_REAL  deslocar, e ir ao estado 30
+    IDENT        deslocar, e ir ao estado 64
+    '('          deslocar, e ir ao estado 65
+
+    fator   ir ao estado 107
+    numero  ir ao estado 67
+
+
+Estado 97
+
+   50 outros_termos: op_ad termo . outros_termos
+
+    '-'  deslocar, e ir ao estado 68
+    '+'  deslocar, e ir ao estado 69
+
+    $padrão  reduzir usando a regra 51 (outros_termos)
+
+    outros_termos  ir ao estado 108
+    op_ad          ir ao estado 71
+
+
+Estado 98
+
+    7 dc_v: SIMBOLO_VAR variaveis ':' tipo_var ';' . dc_v
+
+    SIMBOLO_VAR  deslocar, e ir ao estado 12
+
+    $padrão  reduzir usando a regra 8 (dc_v)
+
+    dc_v  ir ao estado 109
+
+
+Estado 99
+
+   18 lista_par: variaveis . ':' tipo_var mais_par
+
+    ':'  deslocar, e ir ao estado 110
+
+
+Estado 100
+
+   16 parametros: '(' lista_par . ')'
+
+    ')'  deslocar, e ir ao estado 111
+
+
+Estado 101
+
+   14 dc_p: SIMBOLO_PROCEDURE IDENT parametros ';' . corpo_p dc_p
+
+    SIMBOLO_VAR  deslocar, e ir ao estado 12
+
+    $padrão  reduzir usando a regra 8 (dc_v)
+
+    dc_v     ir ao estado 112
+    corpo_p  ir ao estado 113
+    dc_loc   ir ao estado 114
+
+
+Estado 102
+
+   26 mais_ident: ';' argumentos .
+
+    $padrão  reduzir usando a regra 26 (mais_ident)
+
+
+Estado 103
+
+   34 cmd: SIMBOLO_WHILE '(' condicao ')' SIMBOLO_DO . cmd
+
+    IDENT          deslocar, e ir ao estado 16
+    SIMBOLO_BEGIN  deslocar, e ir ao estado 17
+    SIMBOLO_READ   deslocar, e ir ao estado 18
+    SIMBOLO_WRITE  deslocar, e ir ao estado 19
+    SIMBOLO_WHILE  deslocar, e ir ao estado 20
+    SIMBOLO_IF     deslocar, e ir ao estado 21
+
+    cmd  ir ao estado 115
+
+
+Estado 104
+
+   28 pfalsa: SIMBOLO_ELSE . cmd
+
+    IDENT          deslocar, e ir ao estado 16
+    SIMBOLO_BEGIN  deslocar, e ir ao estado 17
+    SIMBOLO_READ   deslocar, e ir ao estado 18
+    SIMBOLO_WRITE  deslocar, e ir ao estado 19
+    SIMBOLO_WHILE  deslocar, e ir ao estado 20
+    SIMBOLO_IF     deslocar, e ir ao estado 21
+
+    cmd  ir ao estado 116
+
+
+Estado 105
+
+   35 cmd: SIMBOLO_IF condicao SIMBOLO_THEN cmd pfalsa .
+
+    $padrão  reduzir usando a regra 35 (cmd)
+
+
+Estado 106
+
+   61 fator: '(' expressao ')' .
+
+    $padrão  reduzir usando a regra 61 (fator)
+
+
+Estado 107
+
+   55 mais_fatores: op_mul fator . mais_fatores
+
+    '*'  deslocar, e ir ao estado 93
+    '/'  deslocar, e ir ao estado 94
+
+    $padrão  reduzir usando a regra 56 (mais_fatores)
+
+    mais_fatores  ir ao estado 117
+    op_mul        ir ao estado 96
+
+
+Estado 108
+
+   50 outros_termos: op_ad termo outros_termos .
+
+    $padrão  reduzir usando a regra 50 (outros_termos)
+
+
+Estado 109
+
+    7 dc_v: SIMBOLO_VAR variaveis ':' tipo_var ';' dc_v .
+
+    $padrão  reduzir usando a regra 7 (dc_v)
+
+
+Estado 110
+
+   18 lista_par: variaveis ':' . tipo_var mais_par
+
+    NUMERO_INT   deslocar, e ir ao estado 74
+    NUMERO_REAL  deslocar, e ir ao estado 75
+
+    tipo_var  ir ao estado 118
+
+
+Estado 111
+
+   16 parametros: '(' lista_par ')' .
+
+    $padrão  reduzir usando a regra 16 (parametros)
+
+
+Estado 112
+
+   22 dc_loc: dc_v .
+
+    $padrão  reduzir usando a regra 22 (dc_loc)
+
+
+Estado 113
+
+   14 dc_p: SIMBOLO_PROCEDURE IDENT parametros ';' corpo_p . dc_p
+
+    SIMBOLO_PROCEDURE  deslocar, e ir ao estado 26
+
+    $padrão  reduzir usando a regra 15 (dc_p)
+
+    dc_p  ir ao estado 119
+
+
+Estado 114
+
+   21 corpo_p: dc_loc . SIMBOLO_BEGIN comandos SIMBOLO_END ';'
+
+    SIMBOLO_BEGIN  deslocar, e ir ao estado 120
+
+
+Estado 115
+
+   34 cmd: SIMBOLO_WHILE '(' condicao ')' SIMBOLO_DO cmd .
+
+    $padrão  reduzir usando a regra 34 (cmd)
+
+
+Estado 116
+
+   28 pfalsa: SIMBOLO_ELSE cmd .
+
+    $padrão  reduzir usando a regra 28 (pfalsa)
+
+
+Estado 117
+
+   55 mais_fatores: op_mul fator mais_fatores .
+
+    $padrão  reduzir usando a regra 55 (mais_fatores)
+
+
+Estado 118
+
+   18 lista_par: variaveis ':' tipo_var . mais_par
+
+    ';'  deslocar, e ir ao estado 121
+
+    $padrão  reduzir usando a regra 20 (mais_par)
+
+    mais_par  ir ao estado 122
+
+
+Estado 119
+
+   14 dc_p: SIMBOLO_PROCEDURE IDENT parametros ';' corpo_p dc_p .
+
+    $padrão  reduzir usando a regra 14 (dc_p)
+
+
+Estado 120
+
+   21 corpo_p: dc_loc SIMBOLO_BEGIN . comandos SIMBOLO_END ';'
+
+    IDENT          deslocar, e ir ao estado 16
+    SIMBOLO_BEGIN  deslocar, e ir ao estado 17
+    SIMBOLO_READ   deslocar, e ir ao estado 18
+    SIMBOLO_WRITE  deslocar, e ir ao estado 19
+    SIMBOLO_WHILE  deslocar, e ir ao estado 20
+    SIMBOLO_IF     deslocar, e ir ao estado 21
+
+    $padrão  reduzir usando a regra 31 (comandos)
+
+    comandos  ir ao estado 123
+    cmd       ir ao estado 23
+
+
+Estado 121
+
+   19 mais_par: ';' . lista_par
+
+    IDENT  deslocar, e ir ao estado 24
+
+    variaveis  ir ao estado 99
+    lista_par  ir ao estado 124
+
+
+Estado 122
+
+   18 lista_par: variaveis ':' tipo_var mais_par .
+
+    $padrão  reduzir usando a regra 18 (lista_par)
+
+
+Estado 123
+
+   21 corpo_p: dc_loc SIMBOLO_BEGIN comandos . SIMBOLO_END ';'
+
+    SIMBOLO_END  deslocar, e ir ao estado 125
+
+
+Estado 124
+
+   19 mais_par: ';' lista_par .
+
+    $padrão  reduzir usando a regra 19 (mais_par)
+
+
+Estado 125
+
+   21 corpo_p: dc_loc SIMBOLO_BEGIN comandos SIMBOLO_END . ';'
+
+    ';'  deslocar, e ir ao estado 126
+
+
+Estado 126
+
+   21 corpo_p: dc_loc SIMBOLO_BEGIN comandos SIMBOLO_END ';' .
+
+    $padrão  reduzir usando a regra 21 (corpo_p)
