@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "y.tab.h"
+#include "syntactic_analyser.tab.h"
 
 #define SIZE 89	//HASH com um espaço maior que o número de entrada, evitando colisões
 #define RESERVERD_WORDS 17
@@ -236,9 +236,8 @@ COMENTARIO ["{"][ \ta-zA-Z_]*["}"]
 
 . {yyerror("entrada invalida\n"); return -1;}
 %%
-/*
+
 int yywrap(void)
 {
   	return 1;
 }
-*/

@@ -1,18 +1,35 @@
+programa - 
+p - 
 ; - ERRO
+var - 
+x - 
 : - ERRO
+integer - 
 ; - ERRO
+begin - 
+x - 
 : - ERRO
 = - ERRO
+1 - 
 ; - ERRO
+x - 
 : - ERRO
 = - ERRO
-3var@ra - ERRO
+varara - 
 ; - ERRO
+while - 
 ( - ERRO
+x - 
 < - ERRO
+3 - 
 ) - ERRO
+do - 
+x - 
 : - ERRO
 = - ERRO
+x - 
 + - ERRO
+1 - 
 ; - ERRO
+end - 
 . - ERRO
